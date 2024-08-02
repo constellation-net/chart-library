@@ -1,5 +1,5 @@
 # Helm Repository
-This is a repository of all Constellation's Helm Charts, including a library Chart, [`common`](common/README.md), for keeping things consistent.
+This is a repository of all Constellation's Helm Charts, including a library Chart, [`common`](charts/common/README.md), for keeping things consistent.
 
 ## Hosting
 This repository is hosted via GitHub Pages. The index and packaged charts are all stored on the `dist` branch.
