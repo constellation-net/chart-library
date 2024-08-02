@@ -1,0 +1,11 @@
+{{- define "common._base.namespace" -}}
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+        name: {{ tpl .Values.metaName }}
+    spec: {}
+{{- end -}}
+
+{{- define "common.resource.namespace" -}}
+    {{- include "common.helper.merge" (append . "common._base.namespace") -}}
+{{- end -}}

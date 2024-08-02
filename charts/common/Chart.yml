@@ -1,0 +1,10 @@
+apiVersion: v2
+name: common
+version: 0.1.0
+description: Library Helm Chart for Constellation's Helm Repository
+type: library
+home: https://github.com/Constellation-Network/kubernetes-helm
+maintainers:
+    - name: Jack Gledhill
+      email: me@jackgledhill.com
+      url: https://jacksoftware.co.uk

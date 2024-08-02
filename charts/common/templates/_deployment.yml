@@ -1,0 +1,23 @@
+{{- define "common._base.deployment" -}}
+    apiVersion: v1
+    kind: Deployment
+    metadata:
+        name: {{ tpl .Values.metaName }}
+        namespace: {{ .Values.namespace }}
+    selector:
+        app: {{ tpl .Values.selectorLabel }}
+    spec:
+        replicas: 1
+        template:
+            metadata:
+                labels:
+                    app: {{ tpl .Values.selectorLabel }}
+            spec:
+                restartPolicy: Always
+                priorityClassName: {{ .Values.priorityClassName }}
+                hostname: {{ .Values.Hostname }}
+{{- end -}}
+
+{{- define "common.resource.deployment" -}}
+    {{- include "common.helper.merge" (append . "common._base.deployment") -}}
+{{- end -}}

@@ -1,0 +1,11 @@
+{{- define "common._base.configmap" -}}
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+        name: {{ tpl .Values.metaName }}
+    data: {}
+{{- end -}}
+
+{{- define "common.resource.configmap" -}}
+    {{- include "common.helper.merge" (append . "common._base.configmap") -}}
+{{- end -}}

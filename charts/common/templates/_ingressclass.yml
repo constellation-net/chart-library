@@ -1,0 +1,12 @@
+{{- define "common._base.ingressclass" -}}
+    apiVersion: networking.k8s.io/v1
+    kind: IngressClass
+    metadata:
+        name: {{ tpl .Values.metaName }}
+        namespace: {{ .Values.namespace }}
+    spec: {}
+{{- end -}}
+
+{{- define "common.resource.ingressclass" -}}
+    {{- include "common.helper.merge" (append . "common._base.ingressclass") -}}
+{{- end -}}

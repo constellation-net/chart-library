@@ -1,0 +1,11 @@
+{{- define "common._base.clusterrole" -}}
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+        name: {{ tpl .Values.metaName }}
+    rules: []
+{{- end -}}
+
+{{- define "common.resource.clusterrole" -}}
+    {{- include "common.helper.merge" (append . "common._base.clusterrole") -}}
+{{- end -}}
