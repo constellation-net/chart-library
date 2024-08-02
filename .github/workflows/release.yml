@@ -29,6 +29,7 @@ jobs:
             - name: Run chart-releaser
               uses: helm/chart-releaser-action@v1.6.0
               with:
-                  config: .github/configs/release.yml
+                  packages_with_index: true
+                  pages_branch: dist
               env:
                   CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
