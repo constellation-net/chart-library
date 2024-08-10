@@ -17,7 +17,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: {{- include "common.variables.name" . -}}
-    namespace: {{ tpl .Values.namespace }}
+    namespace: {{ tpl .Values.namespace . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

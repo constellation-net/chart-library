@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Deployment
 metadata:
   name: {{- include "common.variables.name" . -}}
-  namespace: {{ tpl .Values.namespace }}
+  namespace: {{ tpl .Values.namespace . }}
 selector:
   {{- include "common.variables.labels" . | nindent 2 -}}
 spec:

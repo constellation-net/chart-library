@@ -1,6 +1,6 @@
 {{- define "common.partials.PriorityClass" -}}
 {{- if .Values.priorityClassName -}}
-priorityClassName: {{ tpl .Values.priorityClassName }}
+priorityClassName: {{ tpl .Values.priorityClassName . }}
 {{- end -}}
 {{- end -}}
 
