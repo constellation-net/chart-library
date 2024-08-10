@@ -117,7 +117,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-              readOnly: true
+              readOnly: false
       
       volumes:
         - name: data
