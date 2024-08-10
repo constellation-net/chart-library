@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{- include "common.variables.name" -}}
+  name: {{- include "common.variables.name" . -}}
   namespace: {{ tpl .Values.namespace }}
 type: ClusterIP
 spec:
   selector:
-    {{- include "common.variables.labels" -}}
+    {{- include "common.variables.labels" . | nindent 4 -}}
 {{- end -}}
 
 {{- define "common.Service" -}}

@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{- include "common.variables.name" -}}
+  name: {{- include "common.variables.name" . -}}
   namespace: {{ tpl .Values.namespace }}
 spec:
   selector:
     matchLabels:
-      {{- include "common.variables.labels" -}}
+      {{- include "common.variables.labels" . | nindent 6 -}}
   template:
     metadata:
       labels:
-        {{- include "common.variables.labels" -}}
-    {{- include "common.partials.PriorityClass" -}}
-    {{- include "common.partials.ServiceAccount" -}}
-    hostname: {{- include "common.variables.name" -}}
+        {{- include "common.variables.labels" . | nindent 8 -}}
+    {{- include "common.partials.PriorityClass" . | nindent 4 -}}
+    {{- include "common.partials.ServiceAccount" . | nindent 4 -}}
+    hostname: {{- include "common.variables.name" . -}}
     restartPolicy: Always
 {{- end -}}
 

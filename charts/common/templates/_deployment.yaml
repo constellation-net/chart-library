@@ -2,18 +2,18 @@
 apiVersion: v1
 kind: Deployment
 metadata:
-  name: {{- include "common.variables.name" -}}
+  name: {{- include "common.variables.name" . -}}
   namespace: {{ tpl .Values.namespace }}
 selector:
-  {{- include "common.variables.labels" -}}
+  {{- include "common.variables.labels" . | nindent 2 -}}
 spec:
   replicas: {{ .Values.replicas }}
   template:
     metadata:
       labels:
-        {{- include "common.variables.labels" -}}
-    {{- include "common.partials.PriorityClass" -}}
-    {{- include "common.partials.ServiceAccount" -}}
+        {{- include "common.variables.labels" . | nindent 8 -}}
+    {{- include "common.partials.PriorityClass" . | nindent 4 -}}
+    {{- include "common.partials.ServiceAccount" . | nindent 4 -}}
     hostname: {{- include "common.variables.name" -}}
     restartPolicy: Always
 {{- end -}}

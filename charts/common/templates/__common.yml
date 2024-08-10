@@ -6,7 +6,7 @@ priorityClassName: {{ tpl .Values.priorityClassName }}
 
 {{- define "common.partials.ServiceAccount" -}}
 {{- if .Values.rbac -}}
-serviceAccountName: {{- include "common.variables.name" -}}
+serviceAccountName: {{- include "common.variables.name" . -}}
 {{- end -}}
 {{- end -}}
 
@@ -15,7 +15,7 @@ serviceAccountName: {{- include "common.variables.name" -}}
 {{- end -}}
 
 {{- define "common.variables.labels" -}}
-app: {{- include "common.variables.name" -}}
+app: {{- include "common.variables.name" . -}}
 {{- if .Values.labels -}}
   {{- toYaml .Values.labels -}}
 {{- end -}}
