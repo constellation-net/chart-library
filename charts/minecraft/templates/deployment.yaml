@@ -152,7 +152,7 @@ spec:
           envFrom:
           {{- range $secret := .Values.secretEnvs -}}
             - secretRef:
-                name: {{ tpl $secret }}
+                name: {{ tpl $secret . }}
           {{- end -}}
           volumeMounts:
             - name: data
@@ -162,6 +162,6 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ tpl .Values.pvcName }}
+            claimName: {{ tpl .Values.pvcName . }}
             readOnly: false
 {{- end -}}
