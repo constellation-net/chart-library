@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{- include "common.variables.name" . -}}
-  namespace: {{ tpl .Values.namespace .s }}
+  namespace: {{ tpl .Values.namespace . }}
 spec:
   selector:
     matchLabels:
