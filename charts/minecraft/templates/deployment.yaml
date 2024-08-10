@@ -14,44 +14,44 @@ spec:
             - name: EULA
               value: "true"
             - name: STOP_SERVER_ANNOUNCE_DELAY
-              value: 30
+              value: "30"
             - name: STOP_DURATION
-              value: 30
+              value: "30"
             - name: INIT_MEMORY
-              value: {{ .Values.serverOptions.memory.initial }}
+              value: {{ .Values.serverOptions.memory.initial | quote }}
             - name: MAX_MEMORY
-              value: {{ .Values.serverOptions.memory.max }}
+              value: {{ .Values.serverOptions.memory.max | quote }}
             - name: OPS
-              value: {{ .Values.serverOptions.operators }}
+              value: {{ .Values.serverOptions.operators | quote }}
             - name: SERVER_NAME
-              value: {{ .Values.serverOptions.branding.serverName }}
+              value: {{ .Values.serverOptions.branding.serverName | quote }}
             - name: MOTD
-              value: {{ .Values.serverOptions.branding.motd }}
+              value: {{ .Values.serverOptions.branding.motd | quote }}
             - name: ICON
-              value: {{ .Values.serverOptions.branding.icon }}
+              value: {{ .Values.serverOptions.branding.icon | quote }}
             - name: MAX_WORLD_SIZE
-              value: {{ .Values.serverOptions.overworld.radius }}
+              value: {{ .Values.serverOptions.overworld.radius | quote }}
             - name: MODE
-              value: {{ .Values.serverOptions.gameplay.gamemode }}
+              value: {{ .Values.serverOptions.gameplay.gamemode | quote }}
             - name: VIEW_DISTANCE
-              value: {{ .Values.serverOptions.gameplay.viewDistance }}
+              value: {{ .Values.serverOptions.gameplay.viewDistance | quote }}
             - name: DIFFICULTY
-              value: {{ .Values.serverOptions.gameplay.difficulty }}
+              value: {{ .Values.serverOptions.gameplay.difficulty | quote }}
             - name: SPAWN_PROTECTION
-              value: {{ .Values.serverOptions.gameplay.spawnProtection }}
+              value: {{ .Values.serverOptions.gameplay.spawnProtection | quote }}
             - name: VERSION
-              value: {{ .Values.serverOptions.server.version }}
+              value: {{ .Values.serverOptions.server.version | quote }}
             - name: MAX_PLAYERS
-              value: {{ .Values.serverOptions.server.maxPlayers }}
+              value: {{ .Values.serverOptions.server.maxPlayers | quote }}
             - name: TZ
-              value: {{ .Values.serverOptions.server.timezone }}
+              value: {{ .Values.serverOptions.server.timezone | quote }}
             - name: TYPE
-              value: {{ .Values.serverOptions.server.jreType }}
+              value: {{ .Values.serverOptions.server.jreType | quote }}
           {{ if .Values.serverOptions.whitelist.enabled }}
             - name: ENABLE_WHITELIST
               value: "true"
             - name: WHITELIST
-              value: {{ .Values.serverOptions.whitelist.players }}
+              value: {{ .Values.serverOptions.whitelist.players | quote }}
           {{- end -}}
           {{ if .Values.serverOptions.overworld.generateStructures }}
             - name: GENERATE_STRUCTURES
@@ -107,7 +107,7 @@ spec:
           {{ end }}
           {{ if eq .Values.serverOptions.server.jreType "AUTO_CURSEFORGE" }}
             - name: CF_PAGE_URL
-              value: {{ .Values.serverOptions.curseforge.modpackUrl }}
+              value: {{ .Values.serverOptions.curseforge.modpackUrl | quote }}
           {{ end }}
           envFrom:
           {{ range $secret := .Values.secretEnvs }}
