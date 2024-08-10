@@ -1,0 +1,10 @@
+{{- include "common.Service" (list . "minecraft.Service") -}}
+
+{{- define "minecraft.Service" -}}
+spec:
+  type: NodePort
+  ports:
+    - port: 25565
+      targetPort: 25565
+      nodePort: 30001
+{{- end -}}

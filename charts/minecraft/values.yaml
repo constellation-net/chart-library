@@ -1,0 +1,53 @@
+# Common options
+namespace: minecraft
+priorityClassName:
+labels: {}
+nodeAffinityLabels: []
+
+serverOptions:
+  memory:
+    initial: 1G
+    max: 2GB
+  rcon:
+    enabled: true
+    port: 25575
+  whitelist:
+    enabled: false
+    players: []
+  operators: []
+  branding:
+    serverName: Constellation
+    motd: Minecraft server running in Kubernetes
+    icon:
+    overrideIcon: true
+  overworld:
+    radius: 10000
+    generateStructures: true
+  nether:
+    enabled: true
+  gameplay:
+    gamemode: survival
+    enableCommandBlocks: false
+    viewDistance: 16
+    pvpEnabled: true
+    difficulty: normal
+    hardcore: false
+    spawnAnimals: true
+    spawnMonsters: true
+    spawnNpcs: true
+    spawnProtection: 0
+  server:
+    version: LATEST
+    announceAchievements: true
+    snooperEnabled: false
+    maxPlayers: 20
+    jreType: VANILLA
+    timezone: Europe/London
+    allowFlight: true
+    onlineMode: true
+    autoPause: true
+  curseforge:
+    modpackUrl: 
+    
+secretEnvs:
+  - secretName

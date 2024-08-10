@@ -1,25 +1,28 @@
-{{- define "common._clusterrole" -}}
+{{- define "common._role" -}}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
   name: {{- include "common.variables.name" -}}
+  namespace: {{ tpl .Values.namespace }}
   annotations:
     rbac.authorization.kubernetes.io/autoupdate: "true"
 {{- end -}}
 
-{{- define "common.ClusterRole" -}}
-{{- include "common.util.merge" (append . "common._clusterrole") -}}
+{{- define "common.Role" -}}
+{{- include "common.util.merge" (append . "common._role") -}}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: {{- include "common.variables.name" -}}
+  namespace: {{ tpl .Values.namespace }}
 subjects:
   - kind: ServiceAccount
     name: {{- include "common.variables.name" -}}
     namespace: {{ tpl .Values.namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: {{- include "common.variables.name" -}}
+  namespace: {{ tpl .Values.namespace }}
 {{- end -}}

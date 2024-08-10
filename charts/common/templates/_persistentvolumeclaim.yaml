@@ -1,0 +1,11 @@
+{{- define "common._persistentvolumeclaim" -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{- include "common.variables.name" -}}
+  namespace: {{ tpl .Values.namespace }}
+{{- end -}}
+
+{{- define "common.PersistentVolumeClaim" -}}
+{{- include "common.util.merge" (append . "common._persistentvolumeclaim") -}}
+{{- end -}}

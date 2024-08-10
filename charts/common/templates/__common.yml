@@ -1,0 +1,22 @@
+{{- define "common.partials.PriorityClass" -}}
+{{- if .Values.priorityClassName -}}
+priorityClassName: {{ tpl .Values.priorityClassName }}
+{{- end -}}
+{{- end -}}
+
+{{- define "common.partials.ServiceAccount" -}}
+{{- if .Values.rbac -}}
+serviceAccountName: {{- include "common.variables.name" -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "common.variables.name" -}}
+{{ .Release.Name }}-{{ .Chart.Name }}
+{{- end -}}
+
+{{- define "common.variables.labels" -}}
+app: {{- include "common.variables.name" -}}
+{{- if .Values.labels -}}
+  {{- toYaml .Values.labels -}}
+{{- end -}}
+{{- end -}}
