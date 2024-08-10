@@ -152,7 +152,7 @@ spec:
             - name: ENABLE_AUTOPAUSE
               value: true
           {{- end -}}
-          {{- if .Values.serverOptions.server.jreType == 'AUTO_CURSEFORGE' -}}
+          {{- if eq .Values.serverOptions.server.jreType "AUTO_CURSEFORGE" -}}
             - name: CF_PAGE_URL
               value: {{ .Values.serverOptions.curseforge.modpackUrl }}
           {{- end -}}
