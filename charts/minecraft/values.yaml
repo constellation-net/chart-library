@@ -1,26 +1,22 @@
 # Common options
 namespace: minecraft
 priorityClassName:
-labels: {}
-nodeAffinityLabels: []
+affinity: {}
 pvcName: minecraft
+replicas: 1
 
 serverOptions:
   memory:
     initial: 1G
     max: 2GB
-  rcon:
-    enabled: true
-    port: 25575
   whitelist:
-    enabled: false
-    players: []
-  operators: []
+    enabled: true
+    players:
+  operators:
   branding:
     serverName: Constellation
     motd: Minecraft server running in Kubernetes
-    icon:
-    overrideIcon: true
+    icon: https://google.com
   overworld:
     radius: 10000
     generateStructures: true
@@ -44,11 +40,11 @@ serverOptions:
     maxPlayers: 20
     jreType: VANILLA
     timezone: Europe/London
-    allowFlight: true
+    allowFlight: false
     onlineMode: true
-    autoPause: true
+    autoPause: false
   curseforge:
-    modpackUrl: 
+    modpackUrl: https://google.com
     
 secretEnvs:
   - secretName

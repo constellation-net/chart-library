@@ -4,119 +4,41 @@
 spec:
   template:
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                {{ toYaml .Values.nodeAffinityLabels | nindent 16 }}
       containers:
-        name: minecraft
+        - name: minecraft
           image: itzg/minecraft-server
           ports:
             - name: minecraft
               containerPort: 25565
           env:
-            # Server refuses to start without it
             - name: EULA
               value: true
-            # These two match Kubernetes' default grace period
             - name: STOP_SERVER_ANNOUNCE_DELAY
               value: 30
             - name: STOP_DURATION
               value: 30
-            # Minimum memory the server will use
-          {{- if .Values.serverOptions.memory.initial -}}
             - name: INIT_MEMORY
               value: {{ .Values.serverOptions.memory.initial }}
-          {{- end -}}
-            # Maximum memory the server will use
-          {{- if .Values.serverOptions.memory.max -}}
             - name: MAX_MEMORY
               value: {{ .Values.serverOptions.memory.max }}
-          {{- end -}}
-            # RCON settings
-          {{- if .Values.serverOptions.rcon.enabled -}}
-            - name: ENABLE_RCON
-              value: true
-          {{- if .Values.serverOptions.rcon.port -}}
-            - name: RCON_PORT
-              value: {{ .Values.serverOptions.rcon.port }}
-          {{- end -}}
-          {{- end -}}
-          {{- if .Values.serverOptions.whitelist.enabled -}}
-            # List of users allowed to join the server
-            - name: ENABLE_WHITELIST
-              value: true
-            - name: WHITELIST
-              value: |
-            {{- range $player := .Values.serverOptions.whitelist.players }}
-              {{ $player }}
-            {{- end -}}
-          {{- end -}}
-            # Operators - users allowed to perform admin commands
             - name: OPS
-              value: |
-            {{- range $player := .Values.serverOptions.operators }}
-              {{ $player }}
-            {{- end -}}
-            # Branding options, show on the server list page in-game
+              value: {{ .Values.serverOptions.operators }}
             - name: SERVER_NAME
               value: {{ .Values.serverOptions.branding.serverName }}
             - name: MOTD
               value: {{ .Values.serverOptions.branding.motd }}
             - name: ICON
               value: {{ .Values.serverOptions.branding.icon }}
-          {{- if .Values.serverOptions.branding.overrideIcon -}}
-            - name: OVERRIDE_ICON
-              value: true
-          {{- end -}}
-            # Overworld settings
             - name: MAX_WORLD_SIZE
               value: {{ .Values.serverOptions.overworld.radius }}
-          {{- if .Values.serverOptions.overworld.generateStructures -}}
-            - name: GENERATE_STRUCTURES
-              value: true
-          {{- end -}}
-            # Nether settings
-          {{- if .Values.serverOptions.nether.enabled -}}
-            - name: ALLOW_NETHER
-              value: true
-          {{- end -}}
-            # General gameplay settings
             - name: MODE
               value: {{ .Values.serverOptions.gameplay.gamemode }}
             - name: VIEW_DISTANCE
-              value: : {{ .Values.serverOptions.gameplay.viewDistance }}
+              value: {{ .Values.serverOptions.gameplay.viewDistance }}
             - name: DIFFICULTY
-              value: : {{ .Values.serverOptions.gameplay.difficulty }}
+              value: {{ .Values.serverOptions.gameplay.difficulty }}
             - name: SPAWN_PROTECTION
-              value: : {{ .Values.serverOptions.gameplay.spawnProtection }}
-          {{- if .Values.serverOptions.gameplay.enableCommandBlocks -}}
-            - name: ENABLE_COMMAND_BLOCK
-              value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.gameplay.hardcore -}}
-            - name: HARDCORE
-              value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.gameplay.pvpEnabled -}}
-            - name: PVP
-              value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.gameplay.spawnAnimals -}}
-            - name: SPAWN_ANIMALS
-              value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.gameplay.spawnMonsters -}}
-            - name: SPAWN_MONSTERS
-              value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.gameplay.spawnNpcs -}}
-            - name: SPAWN_NPCS
-              value: true
-          {{- end -}}
-            # Server options
+              value: {{ .Values.serverOptions.gameplay.spawnProtection }}
             - name: VERSION
               value: {{ .Values.serverOptions.server.version }}
             - name: MAX_PLAYERS
@@ -125,35 +47,73 @@ spec:
               value: {{ .Values.serverOptions.server.timezone }}
             - name: TYPE
               value: {{ .Values.serverOptions.server.jreType }}
-          {{- if .Values.serverOptions.server.announceAchievements -}}
+          {{ if .Values.serverOptions.whitelist.enabled }}
+            - name: ENABLE_WHITELIST
+              value: true
+            - name: WHITELIST
+              value: {{ .Values.serverOptions.whitelist.players }}
+          {{- end -}}
+          {{ if .Values.serverOptions.overworld.generateStructures }}
+            - name: GENERATE_STRUCTURES
+              value: true
+          {{ end }}
+          {{ if .Values.serverOptions.nether.enabled }}
+            - name: ALLOW_NETHER
+              value: true
+          {{ end }}
+          {{ if .Values.serverOptions.gameplay.enableCommandBlocks }}
+            - name: ENABLE_COMMAND_BLOCK
+              value: true
+          {{ end }}
+          {{ if .Values.serverOptions.gameplay.hardcore }}
+            - name: HARDCORE
+              value: true
+          {{ end }}
+          {{ if .Values.serverOptions.gameplay.pvpEnabled }}
+            - name: PVP
+              value: true
+          {{ end }}
+          {{ if .Values.serverOptions.gameplay.spawnAnimals }}
+            - name: SPAWN_ANIMALS
+              value: true
+          {{ end }}
+          {{ if .Values.serverOptions.gameplay.spawnMonsters }}
+            - name: SPAWN_MONSTERS
+              value: true
+          {{ end }}
+          {{ if .Values.serverOptions.gameplay.spawnNpcs }}
+            - name: SPAWN_NPCS
+              value: true
+          {{ end }}
+          {{ if .Values.serverOptions.server.announceAchievements }}
             - name: ANNOUNCE_PLAYER_ACHIEVEMENTS
               value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.server.snooperEnabled -}}
+          {{ end }}
+          {{ if .Values.serverOptions.server.snooperEnabled }}
             - name: SNOOPER_ENABLED
               value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.server.onlineMode -}}
+          {{ end }}
+          {{ if .Values.serverOptions.server.onlineMode }}
             - name: ONLINE_MODE
               value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.server.allowFlight -}}
+          {{ end }}
+          {{ if .Values.serverOptions.server.allowFlight }}
             - name: ALLOW_FLIGHT
               value: true
-          {{- end -}}
-          {{- if .Values.serverOptions.server.autoPause -}}
+          {{ end }}
+          {{ if .Values.serverOptions.server.autoPause }}
             - name: ENABLE_AUTOPAUSE
               value: true
-          {{- end -}}
-          {{- if eq .Values.serverOptions.server.jreType "AUTO_CURSEFORGE" -}}
+          {{ end }}
+          {{ if eq .Values.serverOptions.server.jreType "AUTO_CURSEFORGE" }}
             - name: CF_PAGE_URL
               value: {{ .Values.serverOptions.curseforge.modpackUrl }}
-          {{- end -}}
+          {{ end }}
           envFrom:
-          {{- range $secret := .Values.secretEnvs -}}
+          {{ range $secret := .Values.secretEnvs }}
             - secretRef:
                 name: {{ tpl $secret . }}
-          {{- end -}}
+          {{ end }}
           volumeMounts:
             - name: data
               mountPath: /data
