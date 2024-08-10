@@ -2,6 +2,7 @@
 namespace: minecraft
 priorityClassName:
 affinity: {}
+labels: {}
 pvcName: minecraft
 replicas: 1
 
