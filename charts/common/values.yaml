@@ -1,4 +1,6 @@
 namespace: default
 priorityClassName:
 labels: {}
+affinity: {}
 rbac: false
+replicas: 1

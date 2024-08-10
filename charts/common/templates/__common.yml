@@ -1,13 +1,13 @@
 {{- define "common.partials.PriorityClass" -}}
-{{- if .Values.priorityClassName -}}
+{{ if .Values.priorityClassName }}
 priorityClassName: {{ tpl .Values.priorityClassName . }}
-{{- end -}}
+{{ end }}
 {{- end -}}
 
 {{- define "common.partials.ServiceAccount" -}}
-{{- if .Values.rbac -}}
-serviceAccountName: {{- include "common.variables.name" . -}}
-{{- end -}}
+{{ if .Values.rbac }}
+serviceAccountName: {{ include "common.variables.name" . }}
+{{ end }}
 {{- end -}}
 
 {{- define "common.variables.name" -}}
@@ -15,8 +15,15 @@ serviceAccountName: {{- include "common.variables.name" . -}}
 {{- end -}}
 
 {{- define "common.variables.labels" -}}
-app: {{- include "common.variables.name" . -}}
-{{- if .Values.labels -}}
-  {{- toYaml .Values.labels -}}
+app: {{ include "common.variables.name" . }}
+{{ with .Values.labels }}
+{{ toYaml . }}
+{{ end }}
 {{- end -}}
+
+{{- define "common.partials.affinity" -}}
+{{ with .Values.affinity }}
+affinity:
+  {{ toYaml . | nindent 2 }}
+{{ end }}
 {{- end -}}
