@@ -12,7 +12,7 @@ spec:
               containerPort: 25565
           env:
             - name: EULA
-              value: true
+              value: "true"
             - name: STOP_SERVER_ANNOUNCE_DELAY
               value: 30
             - name: STOP_DURATION
@@ -49,61 +49,61 @@ spec:
               value: {{ .Values.serverOptions.server.jreType }}
           {{ if .Values.serverOptions.whitelist.enabled }}
             - name: ENABLE_WHITELIST
-              value: true
+              value: "true"
             - name: WHITELIST
               value: {{ .Values.serverOptions.whitelist.players }}
           {{- end -}}
           {{ if .Values.serverOptions.overworld.generateStructures }}
             - name: GENERATE_STRUCTURES
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.nether.enabled }}
             - name: ALLOW_NETHER
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.gameplay.enableCommandBlocks }}
             - name: ENABLE_COMMAND_BLOCK
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.gameplay.hardcore }}
             - name: HARDCORE
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.gameplay.pvpEnabled }}
             - name: PVP
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.gameplay.spawnAnimals }}
             - name: SPAWN_ANIMALS
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.gameplay.spawnMonsters }}
             - name: SPAWN_MONSTERS
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.gameplay.spawnNpcs }}
             - name: SPAWN_NPCS
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.server.announceAchievements }}
             - name: ANNOUNCE_PLAYER_ACHIEVEMENTS
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.server.snooperEnabled }}
             - name: SNOOPER_ENABLED
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.server.onlineMode }}
             - name: ONLINE_MODE
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.server.allowFlight }}
             - name: ALLOW_FLIGHT
-              value: true
+              value: "true"
           {{ end }}
           {{ if .Values.serverOptions.server.autoPause }}
             - name: ENABLE_AUTOPAUSE
-              value: true
+              value: "true"
           {{ end }}
           {{ if eq .Values.serverOptions.server.jreType "AUTO_CURSEFORGE" }}
             - name: CF_PAGE_URL
