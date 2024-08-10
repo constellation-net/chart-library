@@ -3,6 +3,7 @@ namespace: minecraft
 priorityClassName:
 labels: {}
 nodeAffinityLabels: []
+pvcName: minecraft
 
 serverOptions:
   memory:

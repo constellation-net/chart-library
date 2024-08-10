@@ -160,7 +160,7 @@ spec:
           {{- range $secret := .Values.secretEnvs -}}
             - secretRef:
                 name: {{ tpl $secret }}
-          {{- env -}}
+          {{- end -}}
           volumeMounts:
             - name: data
               mountPath: /data
