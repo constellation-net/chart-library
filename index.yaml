@@ -73,6 +73,24 @@ entries:
     version: 0.1.0
   minecraft:
   - apiVersion: v2
+    created: "2024-08-10T16:42:00.108292746Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 1.0.3
+    description: A Minecraft server all neatly packaged up in a Kubernetes Helm chart
+    digest: 79a11e7782638e9f64965d59fd2bdd4ef41312ad508642c1d678881ff6e21163
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: minecraft
+    type: application
+    urls:
+    - minecraft-1.0.6.tgz
+    version: 1.0.6
+  - apiVersion: v2
     created: "2024-08-10T16:36:01.96282718Z"
     dependencies:
     - name: common
@@ -180,4 +198,4 @@ entries:
     urls:
     - minecraft-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-10T16:36:01.962858027Z"
+generated: "2024-08-10T16:42:00.108331409Z"
