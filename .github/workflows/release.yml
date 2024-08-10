@@ -28,7 +28,7 @@ jobs:
 
             - name: add repos
               run: |
-                  helm repo add constellation https://charts.starsys.dev
+                  helm repo add constellation https://charts.starsystem.dev
         
             - name: Run chart-releaser
               uses: helm/chart-releaser-action@v1.6.0
