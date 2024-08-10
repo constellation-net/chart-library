@@ -9,14 +9,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                {{- range $label := .Values.nodeAffinityLabels -}}
-                  - key: {{ $label.key }}
-                    operator: {{ $label.operator }}
-                    values:
-                    {{- range $value := $label.values -}}
-                      - {{ $value }}
-                    {{- end -}}
-                {{- end -}}
+                {{ toYaml .Values.nodeAffinityLabels | nindent 16 }}
       containers:
         name: minecraft
           image: itzg/minecraft-server
