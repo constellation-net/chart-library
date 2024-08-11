@@ -4,7 +4,7 @@
 spec:
   template:
     spec:
-      dnsPolicy: default
+      dnsPolicy: Default
       containers:
         - name: minecraft
           image: itzg/minecraft-server
