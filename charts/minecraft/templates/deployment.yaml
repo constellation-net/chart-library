@@ -23,7 +23,7 @@ spec:
             - name: MAX_MEMORY
               value: {{ .Values.serverOptions.memory.max | quote }}
             - name: OPS
-              value: {{ .Values.serverOptions.operators | quote }}
+              value: |{{ .Values.serverOptions.operators | nindent 16 }}
             - name: SERVER_NAME
               value: {{ .Values.serverOptions.branding.serverName | quote }}
             - name: MOTD
@@ -52,7 +52,7 @@ spec:
             - name: ENABLE_WHITELIST
               value: "true"
             - name: WHITELIST
-              value: {{ .Values.serverOptions.whitelist.players | quote }}
+              value: |{{ .Values.serverOptions.whitelist.players | nindent 16 }}
           {{- end -}}
           {{ if .Values.serverOptions.overworld.generateStructures }}
             - name: GENERATE_STRUCTURES

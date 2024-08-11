@@ -12,8 +12,10 @@ serverOptions:
     max: 2GB
   whitelist:
     enabled: true
-    players:
-  operators:
+    players: |
+      JackTEK
+  operators: |
+    JackTEK
   branding:
     serverName: Constellation
     motd: Minecraft server running in Kubernetes
