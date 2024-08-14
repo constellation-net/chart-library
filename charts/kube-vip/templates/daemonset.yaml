@@ -19,7 +19,7 @@ spec:
           env:
             # Required configuration options
             - name: address
-              value: {{ .Values.kubevip.virtualIp.address }}
+              value: {{ .Values.kubevip.virtualIp.address | quote }}
             - name: vip_interface
               value: {{ .Values.kubevip.virtualIp.interface | default "ens160" }}
             - name: cp_enable
@@ -33,11 +33,11 @@ spec:
             - name: vip_leaderelection
               value: "true"
             - name: vip_leaseduration
-              value: {{ .Values.kubevip.arp.leaderElection.leaseDuration | default "5" }}
+              value: {{ .Values.kubevip.arp.leaderElection.leaseDuration | default "5" | quote }}
             - name: vip_renewdeadline
-              value: {{ .Values.kubevip.arp.leaderElection.renewDeadline | default "3" }}
+              value: {{ .Values.kubevip.arp.leaderElection.renewDeadline | default "3" | quote }}
             - name: vip_retryperiod
-              value: {{ .Values.kubevip.arp.leaderElection.retryPeriod | default "1" }}
+              value: {{ .Values.kubevip.arp.leaderElection.retryPeriod | default "1" | quote }}
             - name: cp_namespace # Namespace where election will reside
               value: {{ include "common.namespace" . }}
           {{ if eq .Values.kubevip.arp.leaderElection.labelLeaderNode true }}
