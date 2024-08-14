@@ -1,12 +1,22 @@
-# Common options
-namespace: minecraft
-priorityClassName:
-affinity: {}
-labels: {}
-pvcName: minecraft
-replicas: 1
+common:
+  namespace: minecraft
 
-serverOptions:
+pods:
+  affinity: {}
+  annotations: {}
+  dnsPolicy: Default
+  hostNetwork: false
+  labels: {}
+  priorityClassName: ""
+  replicas: 1
+  tolerations: []
+
+rbac:
+  create: false
+  serviceAccountName: '{{ include "common.name" . }}'
+  subjects: []
+
+minecraft:
   memory:
     initial: 1G
     max: 2GB
@@ -49,6 +59,7 @@ serverOptions:
     autoPause: false
   curseforge:
     modpackUrl: https://google.com
-    
-secretEnvs:
-  - secretName
+  cluster:
+    dataPvc: minecraft
+    secretEnvs:
+      - secretName

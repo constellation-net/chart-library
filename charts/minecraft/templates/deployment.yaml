@@ -1,4 +1,4 @@
-{{- include "common.Deployment" (list . "minecraft.Deployment") -}}
+{{ include "common.Deployment" (list . "minecraft.Deployment") }}
 
 {{- define "minecraft.Deployment" -}}
 spec:
@@ -19,99 +19,99 @@ spec:
             - name: STOP_DURATION
               value: "30"
             - name: INIT_MEMORY
-              value: {{ .Values.serverOptions.memory.initial | quote }}
+              value: {{ .Values.minecraft.memory.initial | quote }}
             - name: MAX_MEMORY
-              value: {{ .Values.serverOptions.memory.max | quote }}
+              value: {{ .Values.minecraft.memory.max | quote }}
             - name: OPS
-              value: {{ join ", " .Values.serverOptions.operators }}
+              value: {{ join ", " .Values.minecraft.operators }}
             - name: SERVER_NAME
-              value: {{ .Values.serverOptions.branding.serverName | quote }}
+              value: {{ .Values.minecraft.branding.serverName | quote }}
             - name: MOTD
-              value: {{ .Values.serverOptions.branding.motd | quote }}
+              value: {{ .Values.minecraft.branding.motd | quote }}
             - name: ICON
-              value: {{ .Values.serverOptions.branding.icon | quote }}
+              value: {{ .Values.minecraft.branding.icon | quote }}
             - name: MAX_WORLD_SIZE
-              value: {{ .Values.serverOptions.overworld.radius | quote }}
+              value: {{ .Values.minecraft.overworld.radius | quote }}
             - name: MODE
-              value: {{ .Values.serverOptions.gameplay.gamemode | quote }}
+              value: {{ .Values.minecraft.gameplay.gamemode | quote }}
             - name: VIEW_DISTANCE
-              value: {{ .Values.serverOptions.gameplay.viewDistance | quote }}
+              value: {{ .Values.minecraft.gameplay.viewDistance | quote }}
             - name: DIFFICULTY
-              value: {{ .Values.serverOptions.gameplay.difficulty | quote }}
+              value: {{ .Values.minecraft.gameplay.difficulty | quote }}
             - name: SPAWN_PROTECTION
-              value: {{ .Values.serverOptions.gameplay.spawnProtection | quote }}
+              value: {{ .Values.minecraft.gameplay.spawnProtection | quote }}
             - name: VERSION
-              value: {{ .Values.serverOptions.server.version | quote }}
+              value: {{ .Values.minecraft.server.version | quote }}
             - name: MAX_PLAYERS
-              value: {{ .Values.serverOptions.server.maxPlayers | quote }}
+              value: {{ .Values.minecraft.server.maxPlayers | quote }}
             - name: TZ
-              value: {{ .Values.serverOptions.server.timezone | quote }}
+              value: {{ .Values.minecraft.server.timezone | quote }}
             - name: TYPE
-              value: {{ .Values.serverOptions.server.jreType | quote }}
-          {{ if .Values.serverOptions.whitelist.enabled }}
+              value: {{ .Values.minecraft.server.jreType | quote }}
+          {{ if .Values.minecraft.whitelist.enabled }}
             - name: ENABLE_WHITELIST
               value: "true"
             - name: WHITELIST
-              value: {{ join ", " .Values.serverOptions.whitelist.players }}
+              value: {{ join ", " .Values.minecraft.whitelist.players }}
           {{- end -}}
-          {{ if .Values.serverOptions.overworld.generateStructures }}
+          {{ if .Values.minecraft.overworld.generateStructures }}
             - name: GENERATE_STRUCTURES
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.nether.enabled }}
+          {{ if .Values.minecraft.nether.enabled }}
             - name: ALLOW_NETHER
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.gameplay.enableCommandBlocks }}
+          {{ if .Values.minecraft.gameplay.enableCommandBlocks }}
             - name: ENABLE_COMMAND_BLOCK
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.gameplay.hardcore }}
+          {{ if .Values.minecraft.gameplay.hardcore }}
             - name: HARDCORE
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.gameplay.pvpEnabled }}
+          {{ if .Values.minecraft.gameplay.pvpEnabled }}
             - name: PVP
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.gameplay.spawnAnimals }}
+          {{ if .Values.minecraft.gameplay.spawnAnimals }}
             - name: SPAWN_ANIMALS
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.gameplay.spawnMonsters }}
+          {{ if .Values.minecraft.gameplay.spawnMonsters }}
             - name: SPAWN_MONSTERS
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.gameplay.spawnNpcs }}
+          {{ if .Values.minecraft.gameplay.spawnNpcs }}
             - name: SPAWN_NPCS
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.server.announceAchievements }}
+          {{ if .Values.minecraft.server.announceAchievements }}
             - name: ANNOUNCE_PLAYER_ACHIEVEMENTS
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.server.snooperEnabled }}
+          {{ if .Values.minecraft.server.snooperEnabled }}
             - name: SNOOPER_ENABLED
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.server.onlineMode }}
+          {{ if .Values.minecraft.server.onlineMode }}
             - name: ONLINE_MODE
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.server.allowFlight }}
+          {{ if .Values.minecraft.server.allowFlight }}
             - name: ALLOW_FLIGHT
               value: "true"
           {{ end }}
-          {{ if .Values.serverOptions.server.autoPause }}
+          {{ if .Values.minecraft.server.autoPause }}
             - name: ENABLE_AUTOPAUSE
               value: "true"
           {{ end }}
-          {{ if eq .Values.serverOptions.server.jreType "AUTO_CURSEFORGE" }}
+          {{ if eq .Values.minecraft.server.jreType "AUTO_CURSEFORGE" }}
             - name: CF_PAGE_URL
-              value: {{ .Values.serverOptions.curseforge.modpackUrl | quote }}
+              value: {{ .Values.minecraft.curseforge.modpackUrl | quote }}
           {{ end }}
           envFrom:
-          {{ range $secret := .Values.secretEnvs }}
+          {{ range $secret := .Values.minecraft.cluster.secretEnvs }}
             - secretRef:
                 name: {{ tpl $secret . }}
           {{ end }}
@@ -123,6 +123,6 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ tpl .Values.pvcName . }}
+            claimName: {{ tpl .Values.minecraft.cluster.dataPvc . }}
             readOnly: false
 {{- end -}}
