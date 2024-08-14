@@ -129,6 +129,24 @@ entries:
     version: 0.1.0
   kube-vip:
   - apiVersion: v2
+    created: "2024-08-14T17:17:14.848197694Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.0
+    description: Kube-vip's manifests packaged into a Helm Chart
+    digest: 497d9c1da89b4518ee757cf948cb971aefb9a32d07e19ac5bbe06470605e7362
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: kube-vip
+    type: application
+    urls:
+    - kube-vip-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
     created: "2024-08-14T16:19:42.542215143Z"
     dependencies:
     - name: common
@@ -658,4 +676,4 @@ entries:
     urls:
     - wg-easy-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-14T16:19:42.542286217Z"
+generated: "2024-08-14T17:17:14.848281019Z"
