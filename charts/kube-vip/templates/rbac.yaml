@@ -5,7 +5,7 @@
 ---
 {{ include "common.rbac.ServiceAccount" . }}
 
-{{- define "kubeVip.Role" -}}
+{{- define "kubeVip.ClusterRole" -}}
 rules:
   # Update Service status
   - apiGroups:
