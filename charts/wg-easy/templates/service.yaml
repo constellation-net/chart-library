@@ -1,0 +1,12 @@
+{{ include "common.Service" (list . "wg-easy.Service") }}
+
+{{- define "wg-easy.Service" -}}
+spec:
+  ports:
+    - port: 51820
+      targetPort: wireguard
+      protocol: UDP
+    - port: 51821
+      targetPort: ui
+      protocol: TCP
+{{- end -}}

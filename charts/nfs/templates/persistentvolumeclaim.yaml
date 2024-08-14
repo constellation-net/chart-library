@@ -1,0 +1,7 @@
+{{ include "common.volumes.PersistentVolumeClaim" (list . "nfs.PersistentVolumeClaim") }}
+
+{{- define "nfs.PersistentVolumeClaim" -}}
+spec:
+  storageClassName: "" # Would use default storage class if not explicitly set to empty string
+  volumeName: {{ tpl .Values.volume.name . }}
+{{- end -}}

@@ -1,0 +1,67 @@
+{{ include "common.rbac.ClusterRole" (list . "traefik.ClusterRole") }}
+---
+{{ include "common.rbac.ServiceAccount" . }}
+
+{{- define "traefik.ClusterRole" -}}
+rules:
+  # Reading, listing and watching for Services and Secrets
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - secrets
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+
+  # Listing and watching Endpoints
+  - apiGroups:
+      - discovery.k8s.io
+    resources:
+      - endpointslices
+    verbs:
+      - list
+      - watch
+
+  # Reading, listing and watching Ingresses and IngressClasses
+  - apiGroups:
+      - extensions
+      - networking.k8s.io
+    resources:
+      - ingresses
+      - ingressclasses
+    verbs:
+      - get
+      - list
+      - watch
+
+  # Updating Ingress status
+  - apiGroups:
+      - extensions
+      - networking.k8s.io
+    resources:
+      - ingresses/status
+    verbs:
+      - update
+    
+  # Traefik Custom Resources
+  - apiGroups:
+      - traefik.io
+    resources:
+      - middlewares
+      - middlewaretcps
+      - ingressroutes
+      - traefikservices
+      - ingressroutetcps
+      - ingressrouteudps
+      - tlsoptions
+      - tlsstores
+      - serverstransports
+      - serverstransporttcps
+    verbs:
+      - get
+      - list
+      - watch
+{{- end -}}

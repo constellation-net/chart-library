@@ -1,0 +1,35 @@
+common:
+  namespace: kube-vip
+
+pods:
+  # Prefers to run the Cloud Provider on control plane nodes, but is not required
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          preference:
+            matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+        - weight: 10
+          preference:
+            matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
+  annotations: {}
+  dnsPolicy: ""
+  hostNetwork: true
+  labels: {}
+  priorityClassName: ""
+  replicas: 1
+  # Allows running on control plane nodes, even if they've requested no scheduling
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      effect: NoSchedule
+    - key: node-role.kubernetes.io/control-plane
+      effect: NoSchedule
+
+rbac:
+  create: true
+  serviceAccountName: '{{ include "common.name" . }}'
+  subjects: []

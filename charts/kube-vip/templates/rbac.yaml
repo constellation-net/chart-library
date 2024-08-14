@@ -1,0 +1,62 @@
+# Modified version of: https://kube-vip.io/manifests/rbac.yaml
+{{ include "common.rbac.ClusterRole" (list . "kubeVip.ClusterRole") }}
+---
+{{ include "common.rbac.ServiceAccount" . }}
+
+{{- define "kubeVip.ClusterRole" -}}
+rules:
+  # Update Service status
+  - apiGroups:
+      - ""
+    resources:
+      - "services/status"
+    verbs:
+      - "update"
+  
+  # Read & modify Services and Endpoints
+  - apiGroups:
+      - ""
+    resources:
+      - "services"
+      - "endpoints"
+    verbs:
+      - "list"
+      - "get"
+      - "watch"
+      - "update"
+  
+  # Get and update Nodes
+  - apiGroups:
+      - ""
+    resources:
+      - "nodes"
+    verbs:
+      - "list"
+      - "get"
+      - "watch"
+      - "update"
+      - "patch"
+  
+  # Not sure what this does
+  - apiGroups:
+      - "coordination.k8s.io"
+    resources:
+      - "leases"
+    verbs:
+      - "list"
+      - "get"
+      - "watch"
+      - "update"
+      - "create"
+  
+  # Read and modify EndpointSlices
+  - apiGroups:
+      - "discovery.k8s.io"
+    resources:
+      - "endpointslices"
+    verbs:
+      - "list"
+      - "get"
+      - "watch"
+      - "update"
+{{- end -}}

@@ -1,0 +1,23 @@
+common:
+  namespace: minecraft
+
+pods:
+  affinity: {}
+  annotations: {}
+  dnsPolicy: ""
+  hostNetwork: false
+  labels: {}
+  priorityClassName: ""
+  replicas: 1
+  tolerations: []
+
+rbac:
+  create: true
+  serviceAccountName: '{{ include "common.name" . }}'
+  subjects: []
+  
+router:
+  # See here for options: https://github.com/itzg/mc-router
+  cliArgs:
+    - --in-kube-cluster # Enables Kubernetes service-discovery
+    - --metrics-backend=discard # One of discard, expvar or influxdb

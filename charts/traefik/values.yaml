@@ -1,0 +1,71 @@
+common:
+  namespace: traefik
+
+pods:
+  affinity: {}
+  annotations: {}
+  dnsPolicy: ""
+  hostNetwork: false
+  labels: {}
+  priorityClassName: ""
+  replicas: 1
+  tolerations: []
+
+rbac:
+  create: true
+  serviceAccountName: '{{ include "common.name" . }}'
+  subjects: []
+
+traefik:
+  # Ports that traffic will listen to and provide proxying for
+  # Can be extended using entrypoints+: in your values.yaml file
+  entrypoints:
+    - name: web # Name of the entrypoint
+      port: 80
+      protocol: TCP
+    - name: websecure
+      port: 443
+      protocol: TCP
+  
+  acmeCerts:
+    secretName: traefik-acme
+    pvcName: traefik-certs
+
+  cors:
+    allowedMethods:
+      - GET
+      - PUT
+      - POST
+      - HEAD
+      - OPTIONS
+    allowedOrigins:
+      - https://example.com
+    allowCreds: true
+    exposeHeaders: true
+    allowedHeaders: "*"
+    maxAge: 100
+
+  # CLI arguments passed to the Traefik container, this is essentially how you pass a static configuration
+  # Can be extended using cliArgs+: in your values.yaml file
+  cliArgs:
+    - --log.level=DEBUG
+    - --api.dashboard=true # Enables the Traefik dashboard
+    - --api.insecure=false # Enforces security on the dashboard and requires it to be proxied
+    - --metrics.addinternals=true # Allows more metrics to be seen by Prometheus
+    - --ping # Enables the ping endpoint for healthchecking Traefik
+    - --providers.kubernetescrd # Automatically fetches all the IngressRoute resources in the cluster and proxies them
+    - --global.sendanonymoususage=false
+    - --entrypoints.web.address=:80
+    - --entrypoints.web.forwardHeaders.insecure=false
+    - --entrypoints.web.forwardHeaders.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
+    - --entrypoints.web.proxyprotocol.insecure=false
+    - --entrypoints.web.proxyprotocol.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
+    - --entrypoints.web.http.redirections.entrypoint.to=websecure # Redirects HTTP requests to HTTPS 
+    - --entrypoints.websecure.address=:443
+    - --entrypoints.websecure.http.tls
+    - --entrypoints.websecure.forwardHeaders.insecure=false
+    - --entrypoints.websecure.forwardHeaders.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
+    - --entrypoints.websecure.proxyprotocol.insecure=false
+    - --entrypoints.websecure.proxyprotocol.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7\
+    - --entrypoints.websecure.http.middlewares=cors@kubernetescrd # Automatically responds to CORS requests for proxied services
+    - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json

@@ -1,0 +1,12 @@
+# Primary proxy service, allows incoming HTTP connections to Traefik, which can then be proxied through to the rest of the cluster
+{{ include "common.net.Service" (list . "traefik.Service") }}
+
+{{- define "traefik.Service" -}}
+spec:
+  ports:
+  {{ range $entrypoint := .Values.traefik.entrypoints }}
+    - port: {{ $entrypoint.port }} # Incoming port
+      targetPort: {{ $entrypoint.port }} # Container port to proxy to 
+      protocol: {{ $entrypoint.protocol }}
+  {{ end }}
+{{- end -}}

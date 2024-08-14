@@ -1,0 +1,17 @@
+{{ include "common.pods.Deployment" (list . "mcrouter.Deployment") }}
+
+{{- define "mcrouter.Deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: mc-router
+          image: itzg/mc-router
+        {{ with .Values.router.cliArgs }}
+          args:
+            {{ toYaml . | nindent 12 }}
+        {{ end }}
+          ports:
+            - name: minecraft
+              containerPort: 25565
+{{- end -}}

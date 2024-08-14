@@ -1,0 +1,13 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ include "common.name" . }}
+  namespace: {{ include "common.namespace" . }}
+spec:
+  headers:
+    accessControlAllowMethods: {{ toYaml .Values.traefik.cors.allowedMethods | nindent 6 }}
+    accessControlAllowHeaders: {{ .Values.traefik.cors.allowedHeaders | quote }}
+    accessControlAllowOriginList: {{ toYaml .Values.traefik.cors.allowedOrigins | nindent 6 }}
+    accessControlMaxAge: {{ .Values.traefik.cors.maxAge }}
+    accessControlAllowCredentials: {{ .Values.traefik.cors.allowCreds }}
+    accessControlExposeHeaders: {{ .Values.traefik.cors.exposeHeaders }}

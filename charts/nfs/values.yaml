@@ -1,0 +1,26 @@
+common:
+  namespace: nfs
+
+pods:
+  affinity: {}
+  annotations: {}
+  dnsPolicy: ""
+  hostNetwork: false
+  labels: {}
+  priorityClassName: ""
+  replicas: 1
+  tolerations: []
+
+rbac:
+  create: true
+  serviceAccountName: '{{ include "common.name" . }}'
+  subjects: []
+
+nfs:
+  exports:
+    configMap:
+      name: nfs
+      namespace: '{{ include "common.namespace" . }}'
+  pvc:
+    name: nfs # Name of the PersistentVolume that will be claimed by the NFS server
+    mountPath: /nfs # Path that PVC will be mounted to within the server container and exposed as

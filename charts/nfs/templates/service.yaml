@@ -1,0 +1,10 @@
+{{ include "common.net.Service" (list . "nfs.Service") }}
+
+{{- define "nfs.Service" -}}
+spec:
+  ports:
+    # NFSv4
+    - port: 2049
+      targetPort: 2049
+      protocol: TCP
+{{- end -}}
