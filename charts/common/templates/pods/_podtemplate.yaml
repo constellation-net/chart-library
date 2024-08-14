@@ -1,0 +1,15 @@
+{{- define "common.pods.PodTemplate" -}}
+template:
+  metadata:
+    labels:
+      {{ include "common.pods.labels" . | nindent 6 }}
+  spec:
+    hostname: {{ include "common.name" . }}
+    restartPolicy: Always
+    {{ include "common.pods.affinity" . | nindent 4 }}
+    {{ include "common.pods.tolerations" . | nindent 4 }}
+    {{ include "common.pods.PriorityClass" . | nindent 4 }}
+    {{ include "common.pods.ServiceAccount" . | nindent 4 }}
+    {{ include "common.pods.dnsPolicy" . | nindent 4 }}
+    {{ include "common.pods.hostNetwork" . | nindent 4 }}
+{{- end -}}

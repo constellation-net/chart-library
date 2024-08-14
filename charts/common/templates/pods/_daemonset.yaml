@@ -1,0 +1,12 @@
+{{- define "common.pods._daemonset" -}}
+apiVersion: apps/v1
+kind: DaemonSet
+{{ include "common.pods.metadata" . }}
+spec:
+  {{ include "common.pods.PodSetSelector" . | nindent 2 }}
+  {{ include "common.pods.PodTemplate" . | nindent 2 }}
+{{- end -}}
+
+{{- define "common.pods.DaemonSet" -}}
+{{ include "common.util.merge" (append . "common.pods._daemonset") }}
+{{- end -}}

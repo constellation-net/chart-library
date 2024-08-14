@@ -1,0 +1,13 @@
+{{- define "common.rbac.serviceAccountName" -}}
+{{ tpl .Values.rbac.serviceAccountName . }}
+{{- end -}}
+
+{{- define "common.rbac.subjects" -}}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "common.rbac.serviceAccountName" . }}
+    namespace: {{ include "common.namespace" . }}
+{{ with .Values.rbac.subjects }}
+  {{ toYaml . | nindent 2 }}
+{{ end }}
+{{- end -}}

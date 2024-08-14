@@ -1,0 +1,32 @@
+{{- define "common.rbac._clusterrole" -}}
+{{ if eq .Values.rbac.create true }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "common.name" . }}
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+{{ end }}
+{{- end -}}
+
+{{- define "common.rbac._clusterrolebinding" -}}
+{{ if eq .Values.rbac.create true }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "common.name" . }}
+{{ include "common.rbac.subjects" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "common.name" . }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.rbac.ClusterRole" -}}
+{{ include "common.util.merge" (append . "common.rbac._clusterrole") }}
+{{- end -}}
+
+{{- define "common.rbac.ClusterRoleBinding" -}}
+{{ include "common.util.merge" (append . "common.rbac._clusterrolebinding") }}
+{{- end -}}

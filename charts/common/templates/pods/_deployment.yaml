@@ -1,0 +1,13 @@
+{{- define "common.pods._deployment" -}}
+apiVersion: apps/v1
+kind: Deployment
+{{ include "common.pods.metadata" . }}
+spec:
+  replicas: {{ .Values.pods.replicas | default 1 }}
+  {{ include "common.pods.PodSetSelector" . | nindent 2 }}
+  {{ include "common.pods.PodTemplate" . | nindent 2 }}
+{{- end -}}
+
+{{- define "common.pods.Deployment" -}}
+{{ include "common.util.merge" (append . "common.pods._deployment") }}
+{{- end -}}

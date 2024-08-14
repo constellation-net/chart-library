@@ -1,6 +1,17 @@
-namespace: default
-priorityClassName:
-labels: {}
-affinity: {}
-rbac: false
-replicas: 1
+common:
+  namespace: default
+
+pods:
+  affinity: {}
+  annotations: {}
+  dnsPolicy: ""
+  hostNetwork: false
+  labels: {}
+  priorityClassName: ""
+  replicas: 1
+  tolerations: []
+
+rbac:
+  create: false
+  serviceAccountName: '{{ include "common.name" . }}'
+  subjects: []

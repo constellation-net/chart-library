@@ -1,0 +1,7 @@
+{{- define "common.name" -}}
+{{ .Release.Name }}-{{ .Chart.Name }}
+{{- end -}}
+
+{{- define "common.namespace" -}}
+{{ tpl .Values.common.namespace . }}
+{{- end -}}

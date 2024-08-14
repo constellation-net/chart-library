@@ -1,0 +1,35 @@
+{{- define "common.rbac._role" -}}
+{{ if .Values.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "common.name" . }}
+  namespace: {{ include "common.namespace" . }}
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+{{ end }}
+{{- end -}}
+
+{{- define "common.rbac._rolebinding" -}}
+{{ if .Values.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "common.name" . }}
+  namespace: {{ include "common.namespace" . }}
+{{ include "common.rbac.subjects" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "common.name" . }}
+  namespace: {{ include "common.namespace" . }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.rbac.Role" -}}
+{{ include "common.util.merge" (append . "common.rbac._role") }}
+{{- end -}}
+
+{{- define "common.rbac.RoleBinding" -}}
+{{ include "common.util.merge" (append . "common.rbac._rolebinding") }}
+{{- end -}}

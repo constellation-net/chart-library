@@ -1,0 +1,66 @@
+{{- define "common.pods.PriorityClass" -}}
+{{ with .Values.pods.priorityClassName }}
+priorityClassName: {{ tpl . . }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.pods.ServiceAccount" -}}
+{{ if eq .Values.rbac.create true }}
+serviceAccountName: {{ include "common.name" . }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.pods.affinity" -}}
+{{ with .Values.pods.affinity }}
+affinity:
+  {{ toYaml . | nindent 2 }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.pods.tolerations" -}}
+{{ with .Values.pods.tolerations }}
+tolerations:
+  {{ toYaml . | nindent 2 }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.pods.dnsPolicy" -}}
+{{ if eq .Values.pods.hostNetwork true }}
+dnsPolicy: {{ tpl .Values.pods.dnsPolicy . | default "ClusterFirstWithHostNet" }}
+{{ else }}
+dnsPolicy: {{ tpl .Values.pods.dnsPolicy . | default "ClusterFirst" }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.pods.hostNetwork" -}}
+{{ if eq .Values.pods.hostNetwork true }}
+hostNetwork: true
+{{ end }}
+{{- end -}}
+
+{{- define "common.pods.PodSetSelector" -}}
+selector:
+  matchLabels:
+    {{ include "common.pods.labels" . | nindent 4 }}
+{{- end -}}
+
+{{- define "common.pods.annotations" -}}
+{{ with .Values.pods.annotations }}
+annotations:
+  {{ toYaml . | nindent 2 }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.pods.labels" -}}
+app: {{ include "common.name" . }}
+{{ with .Values.pods.labels }}
+{{ toYaml . }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.pods.metadata" -}}
+metadata:
+  name: {{ include "common.name" . }}
+  namespace: {{ include "common.namespace" . }}
+  {{ include "common.pods.annotations" . | nindent 2 }}
+{{- end -}}
