@@ -1,9 +1,9 @@
 # Modified version of: https://kube-vip.io/manifests/rbac.yaml
-{{ include "common.rbac.ClusterRole" (list . "kubeVip.ClusterRole") }}
+{{ include "common.rbac.Role" (list . "kubeVip.Role") }}
 ---
 {{ include "common.rbac.ServiceAccount" . }}
 
-{{- define "kubeVip.ClusterRole" -}}
+{{- define "kubeVip.Role" -}}
 rules:
   # Update Service status
   - apiGroups:
@@ -37,7 +37,7 @@ rules:
       - "update"
       - "patch"
   
-  # Not sure what this does
+  # Used for leader election
   - apiGroups:
       - "coordination.k8s.io"
     resources:
