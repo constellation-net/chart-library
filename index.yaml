@@ -127,6 +127,64 @@ entries:
     urls:
     - common-0.1.0.tgz
     version: 0.1.0
+  kube-vip:
+  - apiVersion: v2
+    created: "2024-08-14T13:18:29.774539855Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.0
+    description: Kube-vip's manifests packaged into a Helm Chart
+    digest: f6963fbc64cb00fec44536ec9896bfb7170c57b95591a784a956bbd9b98cb689
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: kube-vip
+    type: application
+    urls:
+    - kube-vip-1.0.0.tgz
+    version: 1.0.0
+  kube-vip-lb:
+  - apiVersion: v2
+    created: "2024-08-14T13:18:29.877017909Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.0
+    description: Kube-vip Cloud Provider for Load Balancing without using a cloud
+      service
+    digest: 7e28e6252ebbf0bd61ae6dcaf6c98f97b9c4e7f3de94658f44866950cc16fe21
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: kube-vip-lb
+    type: application
+    urls:
+    - kube-vip-lb-1.0.0.tgz
+    version: 1.0.0
+  mc-router:
+  - apiVersion: v2
+    created: "2024-08-14T13:18:30.006073644Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.0
+    description: Reverse Proxy for Constellation's Minecraft servers, using K8s service-discovery
+    digest: 877075bbf27e9683158e0fa556b8f723bde4fd29636ac7923d80f3d1c54bd4fd
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: mc-router
+    type: application
+    urls:
+    - mc-router-1.0.0.tgz
+    version: 1.0.0
   minecraft:
   - apiVersion: v2
     created: "2024-08-11T12:30:51.59301994Z"
@@ -452,4 +510,61 @@ entries:
     urls:
     - minecraft-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-14T12:33:08.444820303Z"
+  nfs:
+  - apiVersion: v2
+    created: "2024-08-14T13:18:30.132981362Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.0
+    description: NFS server exposing a single directory as an NFS share to the cluster
+    digest: 3ace4285817686243a734064dabc5b36aa3a28d3c73d22df5d2f57bd0b403231
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: nfs
+    type: application
+    urls:
+    - nfs-1.0.0.tgz
+    version: 1.0.0
+  traefik:
+  - apiVersion: v2
+    created: "2024-08-14T13:18:30.263636442Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.0
+    description: Reverse proxy & SSL provider for Constellation's services
+    digest: 38657869312f6a3987e11f7d008f54c191b2f681b9619b670eb01776f8cd4272
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: traefik
+    type: application
+    urls:
+    - traefik-1.0.0.tgz
+    version: 1.0.0
+  wg-easy:
+  - apiVersion: v2
+    created: "2024-08-14T13:18:30.392540501Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.0
+    description: Wireguard server with a builtin UI packaged up in a Helm chart
+    digest: dd0785aa745a77dc8c72986d019cff6cebc2cc852887799b452ba1b26363a2f1
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: wg-easy
+    type: application
+    urls:
+    - wg-easy-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-08-14T13:18:30.392613608Z"
