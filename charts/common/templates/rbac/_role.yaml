@@ -31,5 +31,5 @@ roleRef:
 {{- end -}}
 
 {{- define "common.rbac.RoleBinding" -}}
-{{ include "common.util.merge" (append . "common.rbac._rolebinding") }}
+{{ include "common.rbac._rolebinding" }}
 {{- end -}}
