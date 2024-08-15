@@ -1,6 +1,8 @@
 # Modified version of: https://github.com/itzg/mc-router/tree/master
 {{ include "common.rbac.ClusterRole" (list . "mcrouter.ClusterRole") }}
 ---
+{{ include "common.rbac.ClusterRoleBinding" . }}
+---
 {{ include "common.rbac.ServiceAccount" . }}
 
 {{- define "mcrouter.ClusterRole" -}}
