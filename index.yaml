@@ -1,5 +1,24 @@
 apiVersion: v1
 entries:
+  cloud-controller:
+  - apiVersion: v2
+    created: "2024-08-15T22:04:24.128797098Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.2
+    description: Kube-vip's cloud controller for managing LoadBalancer services
+    digest: c8ae89ff4c0f43520b74f79e0a6bc2fb9ad58a649568573ed715b9a7aecde8d3
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: cloud-controller
+    type: application
+    urls:
+    - cloud-controller-1.0.0.tgz
+    version: 1.0.0
   common:
   - apiVersion: v2
     created: "2024-08-14T18:28:10.395839088Z"
@@ -1155,4 +1174,4 @@ entries:
     urls:
     - wg-easy-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-15T21:03:16.500769096Z"
+generated: "2024-08-15T22:04:24.128982554Z"
