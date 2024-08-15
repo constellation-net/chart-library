@@ -30,6 +30,7 @@ traefik:
   service:
     type: ClusterIP
     annotations: {}
+    loadBalancerIP: ""
 
   loadBalancing:
     enabled: false

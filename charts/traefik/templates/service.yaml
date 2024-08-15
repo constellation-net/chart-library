@@ -9,6 +9,9 @@ metadata:
 {{ end }}
 spec:
   type: {{ .Values.traefik.service.type }}
+  {{ with .Values.traefik.service.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{ end }}
   ports:
   {{ range $entrypoint := .Values.traefik.entrypoints }}
     - name: {{ $entrypoint.name }}
