@@ -2,11 +2,13 @@
 {{ include "common.net.Service" (list . "traefik.Service") }}
 
 {{- define "traefik.Service" -}}
-spec:
-{{ if eq .Values.traefik.loadBalancing.enabled true }}
-  type: LoadBalancer
-  loadBalancerIP: {{ .Values.traefik.loadBalancing.ip }}
+{{ with .Values.traefik.service.annotations }}
+metadata:
+  annotations:
+    {{ toYaml . | nindent 4 }}
 {{ end }}
+spec:
+  type: {{ .Values.traefik.service.type }}
   ports:
   {{ range $entrypoint := .Values.traefik.entrypoints }}
     - name: {{ $entrypoint.name }}

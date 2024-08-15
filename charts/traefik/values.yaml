@@ -27,6 +27,10 @@ traefik:
       port: 443
       protocol: TCP
 
+  service:
+    type: ClusterIP
+    annotations: {}
+
   loadBalancing:
     enabled: false
     ip: ""
