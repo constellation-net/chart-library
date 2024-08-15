@@ -1,0 +1,24 @@
+{{ include "common.pods.Deployment" (list . "ddns.Deployment") }}
+
+{{- define "ddns.Deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: ddns
+          image: timothyjmiller/cloudflare-ddns:latest
+          env:
+            - name: CONFIG_PATH
+              value: /etc/ddns/
+          volumeMounts:
+            # Mounts the ConfigMap that has the Cloudflare credentials
+            - name: config
+              mountPath: /etc/ddns
+              readOnly: true # Doesn't have to be, but could potentially mitigate an attack vector
+          
+      volumes:
+        # Mount ConfigMap with config.json file 
+        - name: config
+          secret:
+            secretName: {{ tpl .Values.ddns.secretName . }}
+{{- end -}}
