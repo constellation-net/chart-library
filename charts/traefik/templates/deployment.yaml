@@ -9,10 +9,10 @@ spec:
       initContainers:
         - name: acme-file-perms
           image: busybox:1.31.1
-          command: ["sh", "-c", "chmod -Rv 600 /data/acme.json"]
+          command: ["sh", "-c", "chmod -Rv 600 /data/*"]
           volumeMounts:
             - name: certs
-              mountPath: /data/acme.json
+              mountPath: /data
       # Creates a single Traefik container with a ConfigMap mounted to provide the static configuration
       containers:
         - name: traefik
@@ -32,7 +32,7 @@ spec:
                 name: {{ tpl .Values.traefik.acmeSecret . }}
           volumeMounts:
             - name: certs
-              mountPath: /data/acme.json
+              mountPath: /data
       
       volumes:
         - name: certs
