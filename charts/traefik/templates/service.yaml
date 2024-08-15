@@ -5,7 +5,8 @@
 spec:
   ports:
   {{ range $entrypoint := .Values.traefik.entrypoints }}
-    - port: {{ $entrypoint.port }} # Incoming port
+    - name: {{ $entrypoint.name }}
+      port: {{ $entrypoint.port }} # Incoming port
       targetPort: {{ $entrypoint.port }} # Container port to proxy to 
       protocol: {{ $entrypoint.protocol }}
   {{ end }}
