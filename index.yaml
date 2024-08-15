@@ -813,6 +813,24 @@ entries:
     version: 1.0.0
   traefik:
   - apiVersion: v2
+    created: "2024-08-15T17:21:45.543842193Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.2
+    description: Reverse proxy & SSL provider for Constellation's services
+    digest: 4d19c5857f425a51f147d2810d17364a3a2c977970fbbae19d6a79c16d02cdde
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: traefik
+    type: application
+    urls:
+    - traefik-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     created: "2024-08-15T15:45:56.749366771Z"
     dependencies:
     - name: common
@@ -885,4 +903,4 @@ entries:
     urls:
     - wg-easy-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-15T17:21:11.379214792Z"
+generated: "2024-08-15T17:21:45.543969851Z"
