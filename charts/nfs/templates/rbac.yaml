@@ -1,6 +1,10 @@
 {{ include "common.rbac.ClusterRole" (list . "nfs.ClusterRole") }}
 ---
+{{ include "common.rbac.ClusterRoleBinding" . }}
+---
 {{ include "common.rbac.Role" (list . "nfs.Role") }}
+---
+{{ include "common.rbac.RoleBinding" . }}
 ---
 {{ include "common.rbac.ServiceAccount" . }}
 
