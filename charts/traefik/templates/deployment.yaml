@@ -5,6 +5,14 @@
 spec:
   template:
     spec:
+      # Every time the Pod starts, this container runs to update the file permissions in the temporary volume
+      initContainers:
+        - name: acme-file-perms
+          image: busybox:1.31.1
+          command: ["sh", "-c", "chmod -Rv 600 /data/acme.json"]
+          volumeMounts:
+            - name: certs
+              mountPath: /data/acme.json
       # Creates a single Traefik container with a ConfigMap mounted to provide the static configuration
       containers:
         - name: traefik
@@ -30,4 +38,5 @@ spec:
         - name: certs
           emptyDir:
             sizeLimit: 50Mi
+            medium: Memory
 {{- end -}}

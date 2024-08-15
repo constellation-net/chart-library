@@ -65,5 +65,5 @@ traefik:
     - --entrypoints.websecure.forwardedheaders.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
     - --entrypoints.websecure.proxyprotocol.insecure=false
     - --entrypoints.websecure.proxyprotocol.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
-    - --entrypoints.websecure.http.middlewares=cors@kubernetescrd # Automatically responds to CORS requests for proxied services
+    - --entrypoints.websecure.http.middlewares=cors # Automatically responds to CORS requests for proxied services
     - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
