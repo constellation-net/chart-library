@@ -24,7 +24,6 @@ minecraft:
     enabled: true
     players:
       - JackTEK
-      - Felpito
   operators:
     - JackTEK
   branding:
