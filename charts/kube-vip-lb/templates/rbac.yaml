@@ -1,6 +1,8 @@
 # Modified version of: https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
 {{ include "common.rbac.ClusterRole" (list . "kubeVipLb.ClusterRole") }}
 ---
+{{ include "common.rbac.ClusterRoleBinding" . }}
+---
 {{ include "common.rbac.ServiceAccount" . }}
 
 {{- define "kubeVipLb.ClusterRole" -}}

@@ -1,6 +1,6 @@
 apiVersion: v2
 name: kube-vip-lb
-version: 1.0.2
+version: 1.0.3
 description: Kube-vip Cloud Provider for Load Balancing without using a cloud service
 type: application
 home: https://github.com/constellation-net/charts
