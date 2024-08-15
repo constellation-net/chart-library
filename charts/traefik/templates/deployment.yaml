@@ -6,10 +6,11 @@ spec:
   template:
     spec:
       # Every time the Pod starts, this container runs to update the file permissions in the temporary volume
+      # Credit to the folks here for documenting their solutions: https://github.com/traefik/traefik-helm-chart/issues/164
       initContainers:
         - name: acme-file-perms
           image: busybox:1.31.1
-          command: ["sh", "-c", "chmod -Rv 600 /data/*"]
+          command: ["sh", "-c", "touch /data/acme.json && chown 65532:65532 /data/acme.json && chmod -Rv 600 /data/acme.json"]
           volumeMounts:
             - name: certs
               mountPath: /data
