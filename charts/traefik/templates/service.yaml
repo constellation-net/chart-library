@@ -3,6 +3,10 @@
 
 {{- define "traefik.Service" -}}
 spec:
+{{ if eq .Values.traefik.loadBalancing.enabled true }}
+  type: LoadBalancer
+  loadBalancerIP: {{ .Values.traefik.loadBalancing.ip }}
+{{ end }}
   ports:
   {{ range $entrypoint := .Values.traefik.entrypoints }}
     - name: {{ $entrypoint.name }}

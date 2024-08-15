@@ -26,7 +26,11 @@ traefik:
     - name: websecure
       port: 443
       protocol: TCP
-  
+
+  loadBalancing:
+    enabled: false
+    ip: ""
+
   acmeSecret: traefik-acme
 
   cors:
