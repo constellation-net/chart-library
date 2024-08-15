@@ -17,6 +17,8 @@ rbac:
   subjects: []
 
 minecraft:
+  service:
+    annotations: {}
   memory:
     initial: 1G
     max: 2G
