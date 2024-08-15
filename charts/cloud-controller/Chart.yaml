@@ -1,0 +1,14 @@
+apiVersion: v2
+name: cloud-controller
+version: 1.0.0
+description: Kube-vip's cloud controller for managing LoadBalancer services
+type: application
+home: https://github.com/constellation-net/charts
+maintainers:
+  - name: Jack Gledhill
+    email: me@jackgledhill.com
+    url: https://jacksoftware.co.uk
+dependencies:
+  - name: common
+    version: 2.0.2
+    repository: https://charts.starsystem.dev

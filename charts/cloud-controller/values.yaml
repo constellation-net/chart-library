@@ -1,0 +1,35 @@
+common:
+  namespace: kube-vip
+
+pods:
+  # Prefers to place the controller on a control plane nodeAffinity
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          preference:
+            matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+        - weight: 10
+          preference:
+            matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
+  annotations: {}
+  dnsPolicy: ""
+  hostNetwork: true
+  labels: {}
+  priorityClassName: ""
+  replicas: 1
+  # Even if a node specifically requests not to run Pods, controller will run anyway
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists
+
+rbac:
+  create: true
+  serviceAccountName: '{{ include "common.name" . }}'
+  subjects: []

@@ -1,0 +1,45 @@
+# Modified version of: https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
+{{ include "common.rbac.ClusterRole" (list . "cloudController.ClusterRole") }}
+---
+{{ include "common.rbac.ClusterRoleBinding" . }}
+---
+{{ include "common.rbac.ServiceAccount" . }}
+
+{{- define "cloudController.ClusterRole" -}}
+rules:
+  # Read/write access to leases for leader election
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - create
+      - update
+      - list
+      - put
+
+  # Full access to configmaps, service status and events
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - endpoints
+      - events
+      - services/status
+      - leases
+    verbs:
+      - "*"
+
+  # Read/write access to nodes & services
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - services
+    verbs:
+      - list
+      - get
+      - watch
+      - update
+{{- end -}}
