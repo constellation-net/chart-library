@@ -27,9 +27,7 @@ traefik:
       port: 443
       protocol: TCP
   
-  acmeCerts:
-    secretName: traefik-acme
-    pvcName: traefik-certs
+  acmeSecret: traefik-acme
 
   cors:
     allowedMethods:

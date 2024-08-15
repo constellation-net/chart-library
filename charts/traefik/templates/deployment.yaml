@@ -21,15 +21,13 @@ spec:
           {{ end }}
           envFrom:
             - secretRef:
-                name: {{ tpl .Values.traefik.acmeCerts.secretName . }}
+                name: {{ tpl .Values.traefik.acmeSecret . }}
           volumeMounts:
             - name: certs
               mountPath: /data/acme.json
-              readOnly: true
       
       volumes:
         - name: certs
-          persistentVolumeClaim:
-            claimName: {{ tpl .Values.traefik.acmeCerts.pvcName . }}
-            readOnly: false
+          emptyDir:
+            sizeLimit: 50Mi
 {{- end -}}
