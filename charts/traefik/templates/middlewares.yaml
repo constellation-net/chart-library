@@ -6,8 +6,7 @@ metadata:
 spec:
   headers:
     accessControlAllowMethods: {{ toYaml .Values.traefik.cors.allowedMethods | nindent 6 }}
-    accessControlAllowHeaders: {{ .Values.traefik.cors.allowedHeaders | quote }}
+    accessControlAllowHeaders: {{ toYaml .Values.traefik.cors.allowedHeaders | nindent 6 }}
     accessControlAllowOriginList: {{ toYaml .Values.traefik.cors.allowedOrigins | nindent 6 }}
     accessControlMaxAge: {{ .Values.traefik.cors.maxAge }}
     accessControlAllowCredentials: {{ .Values.traefik.cors.allowCreds }}
-    accessControlExposeHeaders: {{ .Values.traefik.cors.exposeHeaders }}

@@ -39,8 +39,8 @@ traefik:
     allowedOrigins:
       - https://example.com
     allowCreds: true
-    exposeHeaders: true
-    allowedHeaders: "*"
+    allowedHeaders:
+      - "*"
     maxAge: 100
 
   # CLI arguments passed to the Traefik container, this is essentially how you pass a static configuration
