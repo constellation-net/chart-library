@@ -7,20 +7,11 @@
 
 {{- define "kubeVip.ClusterRole" -}}
 rules:
-  # Update Service status
-  - apiGroups:
-      - ""
-    resources:
-      - "services/status"
-    verbs:
-      - "update"
-  
   # Read & modify Services and Endpoints
   - apiGroups:
       - ""
     resources:
       - "services"
-      - "endpoints"
     verbs:
       - "list"
       - "get"
@@ -50,6 +41,7 @@ rules:
       - "watch"
       - "update"
       - "create"
+      - "put"
   
   # Read and modify EndpointSlices
   - apiGroups:
@@ -61,4 +53,15 @@ rules:
       - "get"
       - "watch"
       - "update"
+
+  - apiGroups:
+      - ""
+    resources:
+      - "configmaps"
+      - "endpoints"
+      - "events"
+      - "services/status"
+      - "leases"
+    verbs:
+      - "*"
 {{- end -}}
