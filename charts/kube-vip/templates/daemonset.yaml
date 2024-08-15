@@ -64,9 +64,4 @@ spec:
               value: "true"
           {{ end }}
         {{ end }}
-        - name: kube-vip-cloud-provider
-          image: ghcr.io/kube-vip/kube-vip-cloud-provider:v0.0.10
-          command:
-            - /kube-vip-cloud-provider
-            - --leader-elect-resource-name={{ include "common.name" . }}
 {{- end -}}
