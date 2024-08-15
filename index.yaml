@@ -324,6 +324,24 @@ entries:
     version: 1.0.0
   mc-router:
   - apiVersion: v2
+    created: "2024-08-15T17:20:37.680737119Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.2
+    description: Reverse Proxy for Constellation's Minecraft servers, using K8s service-discovery
+    digest: 14e7ea31a0a21c1a1009cb864d770eb02c29ca731b20fa3227d9e607f3cce438
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: mc-router
+    type: application
+    urls:
+    - mc-router-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
     created: "2024-08-14T13:18:30.006073644Z"
     dependencies:
     - name: common
@@ -849,4 +867,4 @@ entries:
     urls:
     - wg-easy-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-15T17:19:54.151003404Z"
+generated: "2024-08-15T17:20:37.680822078Z"
