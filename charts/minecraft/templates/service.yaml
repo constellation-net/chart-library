@@ -1,4 +1,4 @@
-{{ include "common.Service" (list . "minecraft.Service") }}
+{{ include "common.net.Service" (list . "minecraft.Service") }}
 
 {{- define "minecraft.Service" -}}
 spec:

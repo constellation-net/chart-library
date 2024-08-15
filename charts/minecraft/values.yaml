@@ -19,7 +19,7 @@ rbac:
 minecraft:
   memory:
     initial: 1G
-    max: 2GB
+    max: 2G
   whitelist:
     enabled: true
     players:
