@@ -6,7 +6,7 @@ spec:
     spec:
       containers:
         - name: nfs-server
-          image: itsthenetwork/nfs-server-alpine:latest
+          image: itsthenetwork/nfs-server-alpine:latest-arm
           # Unfortunately this is required for just about every NFS server in existence
           # As the NFS server is internal, the attack vector is hopefully quite small
           securityContext:
