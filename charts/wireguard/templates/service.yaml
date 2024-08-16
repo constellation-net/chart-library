@@ -5,10 +5,10 @@ spec:
   ports:
     - name: wireguard
       port: 51820
-      targetPort: wireguard
+      targetPort: 51820
       protocol: UDP
     - name: ui
       port: 51821
-      targetPort: ui
+      targetPort: 51821
       protocol: TCP
 {{- end -}}
