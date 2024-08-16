@@ -22,7 +22,7 @@ spec:
               readOnly: true # Doesn't have to be, but could potentially mitigate an attack vector
             # Bind mount to a local directory where files will be stored on disk
             - name: local
-              mountPath: {{ tpl .Values.nfs.pvc.mountPath . }}
+              mountPath: {{ tpl .Values.nfs.volume.mountPath . }}
               readOnly: false
               
         # Creates PVs for each PVC that mounts a subdirectory from the NFS export
@@ -41,16 +41,16 @@ spec:
               value: {{ include "common.name" . }}.{{ include "common.namespace" . }} # DNS name of Service 
             # The mounting path for the NFS server, given with NFS_SERVER to complete a full mount URL
             - name: NFS_PATH
-              value: {{ tpl .Values.nfs.pvc.mountPath . }}
+              value: {{ tpl .Values.nfs.volume.mountPath . }}
       
       volumes:
-        # Mount ConfigMap with exports 
+        # Mount ConfigMap with exports.txt configuration
         - name: exports
           configMap:
-            name: {{ tpl .Values.nfs.exports.configMap.name . }}
-            namespace: {{ tpl .Values.nfs.exports.configMap.namespace . }}
+            name: {{ tpl .Values.nfs.configMap.name . }}
+            namespace: {{ tpl .Values.nfs.configMap.namespace . }}
             items:
-              - key: exports
+              - key: {{ tpl .Values.nfs.configMap.key . }}
                 path: exports.txt
         # PersistentVolume mapping a local directory from one node to the NFS server
         - name: local

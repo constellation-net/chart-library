@@ -2,6 +2,6 @@
 
 {{- define "nfs.PersistentVolumeClaim" -}}
 spec:
-  storageClassName: "" # Would use default storage class if not explicitly set to empty string
+  storageClassName: {{ tpl .Values.volume.storageClassName . }}
   volumeName: {{ tpl .Values.volume.name . }}
 {{- end -}}
