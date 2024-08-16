@@ -6,4 +6,7 @@ spec:
   volumeName: {{ tpl .Values.nfs.volume.name . }}
   accessModes:
     - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.nfs.volume.capacity }}
 {{- end -}}
