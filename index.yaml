@@ -1374,4 +1374,23 @@ entries:
     urls:
     - wg-easy-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-16T19:51:09.048058445Z"
+  wireguard:
+  - apiVersion: v2
+    created: "2024-08-16T19:55:26.202432218Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.2
+    description: Wireguard server with a builtin UI packaged up in a Helm chart
+    digest: 8d6b0263203538c8c0f8ca0eff5586a55ad2ef38d2c5993427e1d3ed58938442
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: wireguard
+    type: application
+    urls:
+    - wireguard-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-08-16T19:55:26.202581296Z"
