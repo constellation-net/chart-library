@@ -887,6 +887,24 @@ entries:
     version: 1.0.0
   nfs:
   - apiVersion: v2
+    created: "2024-08-16T14:40:05.471730886Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.2
+    description: NFS server exposing a single directory as an NFS share to the cluster
+    digest: 2dc7e760e7a59d4719fdb092e7d0549ad6ce3f4f3e071055f7e70c00991c3c4f
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: nfs
+    type: application
+    urls:
+    - nfs-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
     created: "2024-08-15T17:21:11.379127629Z"
     dependencies:
     - name: common
@@ -1230,4 +1248,4 @@ entries:
     urls:
     - wg-easy-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-15T23:48:09.142925315Z"
+generated: "2024-08-16T14:40:05.471882118Z"
