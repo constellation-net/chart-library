@@ -2,6 +2,6 @@
 
 {{- define "nfs.PersistentVolumeClaim" -}}
 spec:
-  storageClassName: {{ tpl .Values.volume.storageClassName . }}
-  volumeName: {{ tpl .Values.volume.name . }}
+  storageClassName: {{ tpl .Values.nfs.volume.storageClassName . }}
+  volumeName: {{ tpl .Values.nfs.volume.name . }}
 {{- end -}}
