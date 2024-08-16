@@ -1376,6 +1376,24 @@ entries:
     version: 1.0.0
   wireguard:
   - apiVersion: v2
+    created: "2024-08-16T20:36:02.666763938Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 2.0.2
+    description: Wireguard server with a builtin UI packaged up in a Helm chart
+    digest: 6cf264f87f8b58439787209644e96f687b156d94ccf8cdc75889cf17ee6984e4
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: wireguard
+    type: application
+    urls:
+    - wireguard-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     created: "2024-08-16T20:02:34.427842512Z"
     dependencies:
     - name: common
@@ -1429,4 +1447,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-08-16T20:02:34.427988564Z"
+generated: "2024-08-16T20:36:02.666972858Z"
