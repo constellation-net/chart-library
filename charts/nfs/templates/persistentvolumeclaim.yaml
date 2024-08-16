@@ -4,4 +4,6 @@
 spec:
   storageClassName: {{ tpl .Values.nfs.volume.storageClassName . }}
   volumeName: {{ tpl .Values.nfs.volume.name . }}
+  accessModes:
+    - ReadWriteOnce
 {{- end -}}
