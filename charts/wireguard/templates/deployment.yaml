@@ -5,7 +5,7 @@ spec:
   template:
     spec:
       containers:
-        name: wireguard
+        - name: wireguard
           image: ghcr.io/wg-easy/wg-easy:latest
           ports:
             - name: wireguard
@@ -31,27 +31,29 @@ spec:
             - name: UI_CHART_TYPE
               value: 1
             - name: WG_HOST
-              value: {{ tpl .Values.wireguard.publicAddress }}
+              value: {{ tpl .Values.wireguard.publicAddress . }}
             - name: WG_DEFAULT_ADDRESS
-              value: {{ tpl .Values.wireguard.defaultAddress }}
+              value: {{ tpl .Values.wireguard.defaultAddress . }}
             - name: WG_ALLOWED_IPS
-              value: {{ tpl .Values.wireguard.allowedIps }}
+              value: {{ tpl .Values.wireguard.allowedIps . }}
             - name: WG_DEFAULT_DNS
-              value: {{ tpl .Values.wireguard.defaultDns }}
+              value: {{ tpl .Values.wireguard.defaultDns . }}
+          {{ with .Values.wireguard.passwordSecret }}
             - name: PASSWORD_HASH
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.wireguard.passwordSecret.name }}
-                  key: {{ .Values.wireguard.passwordSecret.key }}
+                  name: {{ .name }}
+                  key: {{ .key }}
                   optional: true
+          {{ end }}
           volumeMounts:
             - name: peers
               mountPath: /etc/wireguard
               readOnly: true
-      
+
       volumes:
         - name: peers
           persistentVolumeClaim:
-            claimName: {{ tpl .Values.wireguard.pvcName }}
+            claimName: {{ tpl .Values.wireguard.pvcName . }}
             readOnly: false
 {{- end -}}
