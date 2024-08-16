@@ -17,13 +17,8 @@ rbac:
   subjects: []
 
 nfs:
-  # Contains the contents of the exports.txt file
-  configMap:
-    name: nfs
-    namespace: '{{ include "common.namespace" . }}'
-    key: exports
+  provisioner: nfs.starsystem.dev
   volume:
     name: nfs # Name of the PersistentVolume that will be claimed by the NFS server
     storageClassName: local # Name of the storage class that the PVC will use
-    mountPath: /nfs # Path that PVC will be mounted to within the server container and exposed as
     capacity: 100Gi

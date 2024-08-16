@@ -6,23 +6,26 @@ spec:
     spec:
       containers:
         - name: nfs-server
-          image: erichough/nfs-server
+          image: itsthenetwork/nfs-server-alpine:latest
+          # Unfortunately this is required for just about every NFS server in existence
+          # As the NFS server is internal, the attack vector is hopefully quite small
           securityContext:
-            capabilities:
-              add:
-                - SYS_ADMIN # Needed or it won't run, needs to mount some sort of filesystems from within the container
+            privileged: true
           # Image supports other versions of NFS, but forcing the latest stable version is a good idea
           ports:
             - name: nfsv4
               containerPort: 2049
+          env:
+            # Waits for changes to be commited before replying to requests
+            # Not as fast as async mode, but avoids data corruption due to a sudden crash
+            - name: SYNC
+              value: "true"
+            - name: SHARED_DIRECTORY
+              value: /export
           volumeMounts:
-            # Mounts the ConfigMap that specifies which directories to export
-            - name: exports
-              mountPath: /etc/exports
-              readOnly: true # Doesn't have to be, but could potentially mitigate an attack vector
             # Bind mount to a local directory where files will be stored on disk
             - name: local
-              mountPath: {{ tpl .Values.nfs.volume.mountPath . }}
+              mountPath: /export
               readOnly: false
               
         # Creates PVs for each PVC that mounts a subdirectory from the NFS export
@@ -35,23 +38,15 @@ spec:
               mountPath: /persistentvolumes # New PVC subdirectories will be created here
           env:
             - name: PROVISIONER_NAME
-              value: {{ include "common.name" . }}
+              value: {{ tpl .Values.nfs.provisioner . }}
             # The hostname/IP address that will be given to any PVCs that are provisioned
             - name: NFS_SERVER
               value: {{ include "common.name" . }}.{{ include "common.namespace" . }} # DNS name of Service 
-            # The mounting path for the NFS server, given with NFS_SERVER to complete a full mount URL
+            # As the NFS server above automatically applies fsid=0 to the exports.txt, no folder name is required
             - name: NFS_PATH
-              value: {{ tpl .Values.nfs.volume.mountPath . }}
+              value: /
       
       volumes:
-        # Mount ConfigMap with exports.txt configuration
-        - name: exports
-          configMap:
-            name: {{ tpl .Values.nfs.configMap.name . }}
-            namespace: {{ tpl .Values.nfs.configMap.namespace . }}
-            items:
-              - key: {{ tpl .Values.nfs.configMap.key . }}
-                path: exports.txt
         # PersistentVolume mapping a local directory from one node to the NFS server
         - name: local
           persistentVolumeClaim:
