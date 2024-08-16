@@ -3,10 +3,12 @@
 {{- define "wireguard.Service" -}}
 spec:
   ports:
-    - port: 51820
+    - name: wireguard
+      port: 51820
       targetPort: wireguard
       protocol: UDP
-    - port: 51821
+    - name: ui
+      port: 51821
       targetPort: ui
       protocol: TCP
 {{- end -}}
