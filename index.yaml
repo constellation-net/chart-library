@@ -938,6 +938,24 @@ entries:
     version: 1.0.0
   nfs:
   - apiVersion: v2
+    created: "2024-09-17T10:10:55.743202308Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: NFS server for providing network storage to a cluster
+    digest: ca5066b180060e537e5698c116e3071fd53bad38d10746de41bb57882d2ed419
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: nfs
+    type: application
+    urls:
+    - nfs-3.0.0.tgz
+    version: 3.0.0
+  - apiVersion: v2
     created: "2024-08-16T19:30:41.590182735Z"
     dependencies:
     - name: common
@@ -1572,4 +1590,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:08:46.728983419Z"
+generated: "2024-09-17T10:10:55.743440174Z"
