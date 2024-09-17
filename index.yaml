@@ -190,6 +190,25 @@ entries:
     version: 0.1.0
   ddns:
   - apiVersion: v2
+    created: "2024-09-17T10:06:26.895149324Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: DDNS client for Cloudflare that periodically updates DNS records
+      with the external IP address
+    digest: 69a47de3f28c44a7aaed12a8cd295fd81a56bfc7c25608e13711ab9774a32f2b
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: ddns
+    type: application
+    urls:
+    - ddns-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     created: "2024-08-15T23:48:09.142764667Z"
     dependencies:
     - name: common
@@ -1515,4 +1534,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:00:11.050718274Z"
+generated: "2024-09-17T10:06:26.895367681Z"
