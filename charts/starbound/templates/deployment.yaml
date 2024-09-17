@@ -1,0 +1,32 @@
+{{ include "common.PVC" . }}
+---
+{{ include "common.Deployment" (list . "starbound.Deployment") }}
+
+{{- define "starbound.Deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: starbound
+          image: morgyn/starbound
+          # These two are needed for providing a Steam Guard code 
+          tty: true
+          stdin: true
+          ports:
+            - name: starbound
+              containerPort: 21025
+          resources:
+            requests:
+              cpu: 2
+              memory: 2G 
+          volumeMounts:
+            - name: data
+              mountPath: /steamcmd/starbound
+              readOnly: false
+
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
+            readOnly: false
+{{- end -}}

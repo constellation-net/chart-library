@@ -1,0 +1,9 @@
+{{ include "common.Service" (list . "starbound.Service") }}
+
+{{- define "starbound.Service" -}}
+spec:
+  ports:
+    # Starbound server
+    - port: 21025
+      targetPort: 21025
+{{- end -}}
