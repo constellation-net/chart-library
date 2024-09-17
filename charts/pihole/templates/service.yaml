@@ -1,0 +1,22 @@
+{{ include "common.Service" (list . "pihole.Service") }}
+
+{{- define "pihole.Service" -}}
+spec:
+  ports:
+    - name: dns-tcp
+      port: 53
+      targetPort: 53
+      protocol: TCP
+    - name: dns-udp
+      port: 53
+      targetPort: 53
+      protocol: UDP
+    - name: dashboard
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: metrics
+      port: 9617
+      targetPort: 9617
+      protocol: TCP
+{{- end -}}

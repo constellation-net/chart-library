@@ -1,0 +1,59 @@
+{{ include "common.PVC" . }}
+---
+{{ include "common.Deployment" (list . "pihole.Deployment") }}
+
+{{- define "pihole.Deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: pihole
+          image: pihole/pihole:latest
+          ports:
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+            - name: dns-ud
+              containerPort: 53
+              protocol: UDP
+            - name: dashboard
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: DNSMASQ_LISTENING
+              value: all
+            - name: TZ
+              value: Europe/London
+            - name: CORS_HOSTS
+              value: home.starsystem.dev
+          {{ include "common.EnvFrom" . | nindent 10 }}
+          resources:
+            requests:
+              cpu: 250m
+              memory: 50M 
+          volumeMounts:
+            - name: data
+              mountPath: /etc
+
+        - name: prometheus
+          image: ekofr/pihole-exporter:latest
+          ports:
+            - name: metrics
+              containerPort: 9617
+          env:
+            - name: PIHOLE_HOSTNAME
+              value: localhost
+            - name: PIHOLE_PORT
+              value: "80"
+            - name: PIHOLE_PROTOCOL
+              value: http
+            - name: PORT
+              value: "9617"
+          {{ include "common.EnvFrom" . | nindent 10 }}
+
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
+            readOnly: false
+{{- end -}}

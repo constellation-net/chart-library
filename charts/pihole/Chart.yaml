@@ -1,0 +1,14 @@
+apiVersion: v2
+name: pihole
+version: 1.0.0
+description: DNS sinkhole for network-wide ad-blocking and custom DNS routing
+type: application
+home: https://github.com/constellation-net/charts
+maintainers:
+  - name: Jack Gledhill
+    email: me@jackgledhill.com
+    url: https://jacksoftware.co.uk
+dependencies:
+  - name: common
+    version: 3.0.0
+    repository: https://charts.starsystem.dev
