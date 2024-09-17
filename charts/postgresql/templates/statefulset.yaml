@@ -1,0 +1,44 @@
+{{ include "common.StatefulSet" (list . "postgresql.StatefulSet") }}
+
+{{- define "postgresql.StatefulSet" -}}
+spec:
+  template:
+    spec:
+      {{ include "common.SelfAntiAffinity" . | nindent 6 }}
+      containers:
+        - name: postgresql
+          image: postgres:alpine
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: {{ .Values.dbName }}
+          {{ include "common.EnvFrom" . | nindent 10 }}
+          resources:
+            requests:
+              cpu: 1
+              memory: 250M 
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+        # Sidecar Prometheus exporter for monitoring
+        - name: prometheus
+          image: quay.io/prometheuscommunity/postgres-exporter
+          ports:
+            - name: prometheus
+              containerPort: 9187
+          env:
+            - name: DATA_SOURCE_URI
+              value: localhost:5432/{{ .Values.dbName }}?sslmode=disable
+          {{ include "common.EnvFrom" . | nindent 10 }}
+
+      volumeClaimTemplates:
+        - metadata:
+            name: data
+            namespace: {{ .Release.Namespace }}
+          spec:
+            accessModes: {{ toYaml .Values.pvc.accessModes | nindent 14 }}
+            resources: {{ toYaml .Values.pvc.resources | nindent 14 }}
+            storageClassName: {{ .Values.pvc.storageClassName | default "" }}
+{{- end -}}

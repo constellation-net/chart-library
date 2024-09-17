@@ -1,0 +1,24 @@
+pod:
+  annotations: {}
+  envFrom: {}
+  labels: {}
+  replicas: 1
+  serviceAccount: default
+  templateArgs: {}
+
+service:
+  annotations: {}
+  clusterIP: ""
+  labels: {}
+  loadBalancerIP: "" 
+  type: ClusterIP
+
+pvc:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""
+
+dbName: db

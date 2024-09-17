@@ -1,0 +1,14 @@
+apiVersion: v2
+name: postgresql
+version: 1.0.0
+description: Provisions a single PostgreSQL server, along with a Prometheus exporter for monitoring
+type: application
+home: https://github.com/constellation-net/charts
+maintainers:
+  - name: Jack Gledhill
+    email: me@jackgledhill.com
+    url: https://jacksoftware.co.uk
+dependencies:
+  - name: common
+    version: 3.0.0
+    repository: https://charts.starsystem.dev
