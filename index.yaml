@@ -1194,6 +1194,25 @@ entries:
     urls:
     - postgresql-1.0.0.tgz
     version: 1.0.0
+  prometheus:
+  - apiVersion: v2
+    created: "2024-09-17T10:20:25.947691529Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: A central monitoring database with support for Grafana
+    digest: 8e4023876041edd2a9db28ae504091f428f196a41b912e323bd28c720c136b96
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: prometheus
+    type: application
+    urls:
+    - prometheus-1.0.0.tgz
+    version: 1.0.0
   traefik:
   - apiVersion: v2
     created: "2024-09-17T10:15:15.399897403Z"
@@ -1647,4 +1666,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:19:17.750604443Z"
+generated: "2024-09-17T10:20:25.94787862Z"
