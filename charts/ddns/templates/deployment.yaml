@@ -1,4 +1,4 @@
-{{ include "common.pods.Deployment" (list . "ddns.Deployment") }}
+{{ include "common.Deployment" (list . "ddns.Deployment") }}
 
 {{- define "ddns.Deployment" -}}
 spec:
@@ -10,15 +10,13 @@ spec:
           env:
             - name: CONFIG_PATH
               value: /etc/ddns/
+          resources:
+            requests:
+              cpu: 100m
+              memory: 50M
           volumeMounts:
-            # Mounts the ConfigMap that has the Cloudflare credentials
+            # Mounts the volume that has the config file
             - name: config
               mountPath: /etc/ddns
-              readOnly: true # Doesn't have to be, but could potentially mitigate an attack vector
-          
-      volumes:
-        # Mount ConfigMap with config.json file 
-        - name: config
-          secret:
-            secretName: {{ tpl .Values.ddns.secretName . }}
+              readOnly: true
 {{- end -}}

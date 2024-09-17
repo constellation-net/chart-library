@@ -1,20 +1,9 @@
-common:
-  namespace: ddns
-
-pods:
-  affinity: {}
+pod:
   annotations: {}
-  dnsPolicy: ""
-  hostNetwork: true
   labels: {}
-  priorityClassName: ""
   replicas: 1
-  tolerations: []
-
-rbac:
-  create: false
-  serviceAccountName: '{{ include "common.name" . }}'
-  subjects: []
-  
-ddns:
-  secretName: ddns-credentials
+  serviceAccount: default
+  templateArgs:
+    volumes:
+      - name: config
+        emptyDir: {}
