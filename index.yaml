@@ -1231,6 +1231,25 @@ entries:
     urls:
     - prometheus-1.0.0.tgz
     version: 1.0.0
+  satisfactory:
+  - apiVersion: v2
+    created: "2024-09-17T10:22:25.78850013Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: Satisfactory dedicated server containerised and orchestrated by Helm
+    digest: fddfe3f3f6828504d365c0ca7b31e4f9b52f011a35556580ece08fbb8f0b901e
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: satisfactory
+    type: application
+    urls:
+    - satisfactory-1.0.0.tgz
+    version: 1.0.0
   starbound:
   - apiVersion: v2
     created: "2024-09-17T10:21:59.884039623Z"
@@ -1722,4 +1741,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:21:59.884199461Z"
+generated: "2024-09-17T10:22:25.788649188Z"
