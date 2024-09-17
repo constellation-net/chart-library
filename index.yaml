@@ -466,6 +466,25 @@ entries:
     urls:
     - kube-vip-lb-1.0.0.tgz
     version: 1.0.0
+  lldap:
+  - apiVersion: v2
+    created: "2024-09-17T10:25:46.605519727Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: LDAP server with a builtin web interface for admin and self-service
+    digest: 00c2b55c50d76bdab953bfabbd1654fc1904cd1294ec29e14a6d4782fd28e63d
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: lldap
+    type: application
+    urls:
+    - lldap-1.0.0.tgz
+    version: 1.0.0
   mc-router:
   - apiVersion: v2
     created: "2024-09-17T10:21:00.17143324Z"
@@ -1759,4 +1778,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:22:53.216214375Z"
+generated: "2024-09-17T10:25:46.605695725Z"
