@@ -1,4 +1,6 @@
-{{ include "common.pods.Deployment" (list . "nfs.Deployment") }}
+{{ include "common.PVC" . }}
+---
+{{ include "common.Deployment" (list . "nfs.Deployment") }}
 
 {{- define "nfs.Deployment" -}}
 spec:
@@ -22,34 +24,20 @@ spec:
               value: "true"
             - name: SHARED_DIRECTORY
               value: /export
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100M 
           volumeMounts:
             # Bind mount to a local directory where files will be stored on disk
             - name: local
               mountPath: /export
               readOnly: false
-              
-        # Creates PVs for each PVC that mounts a subdirectory from the NFS export
-        # Automatically creates the subdirectory on the NFS server if it does not already exist
-        - name: nfs-provisioner
-          image: registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
-          # As the Pod is already pinned to a specific node anyway, might as well use a local mount for the provisioner instead of NFS
-          volumeMounts:
-            - name: local
-              mountPath: /persistentvolumes # New PVC subdirectories will be created here
-          env:
-            - name: PROVISIONER_NAME
-              value: {{ tpl .Values.nfs.provisioner . }}
-            # The hostname/IP address that will be given to any PVCs that are provisioned
-            - name: NFS_SERVER
-              value: {{ include "common.name" . }}.{{ include "common.namespace" . }} # DNS name of Service 
-            # As the NFS server above automatically applies fsid=0 to the exports.txt, no folder name is required
-            - name: NFS_PATH
-              value: /
-      
+
       volumes:
         # PersistentVolume mapping a local directory from one node to the NFS server
         - name: local
           persistentVolumeClaim:
-            claimName: {{ include "common.name" . }}
+            claimName: {{ .Release.Name }}
             readOnly: false
 {{- end -}}
