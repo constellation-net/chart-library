@@ -1,0 +1,32 @@
+{{ include "common.StatefulSet" (list . "prometheus.StatefulSet") }}
+
+{{- define "prometheus.StatefulSet" -}}
+spec:
+  template:
+    spec:
+      {{ include "common.SelfAntiAffinity" . | nindent 6 }}
+      containers:
+        - name: prometheus
+          image: prom/prometheus:latest
+          ports:
+            - name: prometheus
+              containerPort: 9090
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 1
+              memory: 1G
+          volumeMounts:
+            - name: data
+              mountPath: /prometheus
+            - name: config
+              mountPath: /etc/prometheus/prometheus.yml
+      volumeClaimTemplates:
+        - metadata:
+            name: data
+            namespace: {{ .Release.Namespace }}
+          spec:
+            accessModes: {{ toYaml .Values.pvc.accessModes | nindent 14 }}
+            resources: {{ toYaml .Values.pvc.resources | nindent 14 }}
+            storageClassName: {{ .Values.pvc.storageClassName | default "" }}
+{{- end -}}

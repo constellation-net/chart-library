@@ -1,0 +1,12 @@
+{{ include "common.HeadlessService" (list . "prometheus.Service") }}
+---
+{{ include "common.Service" (list . "prometheus.Service") }}
+
+{{- define "prometheus.Service" -}}
+spec:
+  ports:
+    - name: prometheus
+      port: 9090
+      targetPort: 9090
+      protocol: TCP
+{{- end -}}
