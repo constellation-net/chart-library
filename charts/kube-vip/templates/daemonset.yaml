@@ -1,67 +1,27 @@
-{{ include "common.pods.DaemonSet" (list . "kubeVip.DaemonSet") }}
+{{ include "common.DaemonSet" (list . "kubevip.DaemonSet") }}
 
-{{- define "kubeVip.DaemonSet" -}}
+{{- define "kubevip.DaemonSet" -}}
 spec:
   template:
     spec:
       containers:
-        - name: kube-vip
+        - name: kubevip
           image: ghcr.io/kube-vip/kube-vip:v0.4.0
           # Needs a bunch of permissions re networking
           securityContext:
             capabilities:
               add:
-              - NET_ADMIN
-              - NET_RAW
-              - SYS_TIME
+                - NET_ADMIN
+                - NET_RAW
+                - SYS_TIME
           args:
             - manager
           env:
-            # Required configuration options
-            - name: address
-              value: {{ .Values.kubevip.virtualIp.address | quote }}
-            - name: vip_interface
-              value: {{ .Values.kubevip.virtualIp.interface | default "ens160" }}
             - name: cp_enable
               value: "true"
-            # Most routers support ARP, this protocol essentially works by the cluster telling everyone on the local network how to route this VIP to a MAC address
-      {{ if eq .Values.kubevip.arp.enabled true }}
-            - name: vip_arp
-              value: "true"
-            # Leader election options, which allows one replica to make decisions while the rest are on standby to pick up the workload
-        {{ if eq .Values.kubevip.arp.leaderElection.enabled true }}
-            - name: vip_leaderelection
-              value: "true"
-            - name: vip_leaseduration
-              value: {{ .Values.kubevip.arp.leaderElection.leaseDuration | default "5" | quote }}
-            - name: vip_renewdeadline
-              value: {{ .Values.kubevip.arp.leaderElection.renewDeadline | default "3" | quote }}
-            - name: vip_retryperiod
-              value: {{ .Values.kubevip.arp.leaderElection.retryPeriod | default "1" | quote }}
-            - name: cp_namespace # Namespace where election will reside
-              value: {{ include "common.namespace" . }}
-          {{ if eq .Values.kubevip.arp.leaderElection.labelLeaderNode true }}
-            - name: enable_node_labeling
-              value: "true"
-          {{ end }}
-        {{ end }}
-      {{ end }}
-            # If the given address is a FQDN instead of an IP, the VIP will be dynamic, but will use DDNS to always map correctly
-          {{ if eq .Values.kubevip.virtualIp.ddns true }}
-            - name: vip_ddns
-              value: "true"
-          {{ end }}
-            # Kube-vip can also act as a load balancer for Services with the type LoadBalancer
-        {{ if eq .Values.kubevip.loadBalancing.enabled true }}
-            - name: svc_enable
-              value: "true"
-          {{ if eq .Values.kubevip.loadBalancing.leaderElection true }}
-            - name: svc_election
-              value: "true"
-          {{ end }}
-          {{ if eq .Values.kubevip.loadBalancing.serviceSecurity true }}
-            - name: enable_service_security
-              value: "true"
-          {{ end }}
-        {{ end }}
+          {{ include "common.EnvFrom" . | nindent 10 }}
+          resources:
+            requests:
+              cpu: 250m
+              memory: 100M 
 {{- end -}}

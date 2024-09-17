@@ -1,11 +1,11 @@
 # Modified version of: https://kube-vip.io/manifests/rbac.yaml
-{{ include "common.rbac.ClusterRole" (list . "kubeVip.ClusterRole") }}
+{{ include "common.ClusterRole" (list . "kubevip.ClusterRole") }}
 ---
-{{ include "common.rbac.ClusterRoleBinding" . }}
+{{ include "common.ClusterRoleBinding" . }}
 ---
-{{ include "common.rbac.ServiceAccount" . }}
+{{ include "common.ServiceAccount" . }}
 
-{{- define "kubeVip.ClusterRole" -}}
+{{- define "kubevip.ClusterRole" -}}
 rules:
   # Read & modify Services and Endpoints
   - apiGroups:

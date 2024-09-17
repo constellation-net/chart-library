@@ -1,50 +1,33 @@
-common:
-  namespace: kube-vip
-
-pods:
-  # By default, forces Kube-vip to run on control plane nodes 
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-            - key: node-role.kubernetes.io/master
-              operator: Exists
-          - matchExpressions:
-            - key: node-role.kubernetes.io/control-plane
-              operator: Exists
+pod:
   annotations: {}
-  dnsPolicy: ""
-  hostNetwork: true
+  envFrom: {}
   labels: {}
-  priorityClassName: ""
   replicas: 1
-  # Even if a node specifically requests not to run Pods, kube-vip will run anyway
-  tolerations:
-    - effect: NoSchedule
-      operator: Exists
-    - effect: NoExecute
-      operator: Exists
+  templateArgs:
+    # Gives very high priority to kube-vip
+    priorityClassName: system-cluster-critical
+    hostNetwork: true
+    # By default, forces Kube-vip to run on control plane nodes 
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+    # Even if a node specifically requests not to run Pods, kube-vip will run anyway
+    tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      - effect: NoExecute
+        operator: Exists
 
-rbac:
-  create: true
-  serviceAccountName: '{{ include "common.name" . }}'
-  subjects: []
-
-kubevip:
-  arp:
-    enabled: true
-    leaderElection:
-      enabled: true
-      labelLeaderNode: true # Leader node will have label kube-vip.io/has-ip=<virtual IP>
-      leaseDuration: "5"
-      renewDeadline: "3"
-      retryPeriod: "1"
-  virtualIp:
-    address: 192.168.1.100
-    ddns: false # address must be a FQDN
-    interface: ens160
-  loadBalancing:
-    enabled: true
-    leaderElection: true # Rather than all load balanced services being pinned to the kube-vip leader node, an election is held to determine a node for each service
-    serviceSecurity: true
+service:
+  annotations: {}
+  clusterIP: ""
+  labels: {}
+  loadBalancerIP: "" 
+  type: ClusterIP
