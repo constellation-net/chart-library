@@ -1,0 +1,47 @@
+{{ include "common.StatefulSet" (list . "satisfactory.StatefulSet") }}
+
+{{- define "satisfactory.StatefulSet" -}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: satisfactory
+          image: wolveix/satisfactory-server:latest
+          ports:
+            - name: satisfactory
+              containerPort: 7777
+              protocol: TCP
+            - name: satisfactory
+              containerPort: 7777
+              protocol: UDP
+          env:
+            - name: ROOTLESS
+              value: "false"
+            - name: STEAMBETA
+              value: "false"
+          {{ include "common.EnvFrom" . | nindent 10 }}
+          livenessProbe:
+            exec:
+              command:
+                - bash
+                - /healthcheck.sh
+              initialDelaySeconds: 120
+              periodSeconds: 30
+              timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 2
+              memory: 8G
+          volumeMounts:
+            - name: data
+              mountPath: /config
+      
+      volumeClaimTemplates:
+        - metadata:
+            name: data
+            namespace: {{ .Release.Namespace }}
+          spec:
+            accessModes: {{ toYaml .Values.pvc.accessModes | nindent 14 }}
+            resources: {{ toYaml .Values.pvc.resources | nindent 14 }}
+            storageClassName: {{ .Values.pvc.storageClassName | default "" }}
+{{- end -}}

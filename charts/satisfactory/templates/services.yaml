@@ -1,0 +1,13 @@
+{{ include "common.HeadlessService" (list . "satisfactory.Service") }}
+
+{{- define "satisfactory.Service" -}}
+spec:
+  ports:
+    # Satisfactory server
+    - port: 7777
+      targetPort: 7777
+      protocol: TCP
+    - port: 7777
+      targetPort: 7777
+      protocol: UDP
+{{- end -}}

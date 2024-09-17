@@ -1,0 +1,14 @@
+apiVersion: v2
+name: satisfactory
+version: 1.0.0
+description: Satisfactory dedicated server containerised and orchestrated by Helm
+type: application
+home: https://github.com/constellation-net/charts
+maintainers:
+  - name: Jack Gledhill
+    email: me@jackgledhill.com
+    url: https://jacksoftware.co.uk
+dependencies:
+  - name: common
+    version: 3.0.0
+    repository: https://charts.starsystem.dev
