@@ -1,0 +1,8 @@
+{{ include "common.Service" (list . "minio.Service") }}
+
+{{- define "minio.Service" -}}
+spec:
+  ports:
+    - port: 
+      targetPort: 
+{{- end -}}
