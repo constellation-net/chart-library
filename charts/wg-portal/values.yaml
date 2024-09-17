@@ -1,0 +1,26 @@
+pod:
+  annotations: {}
+  envFrom: {}
+  labels: {}
+  replicas: 1
+  serviceAccount: default
+  templateArgs:
+    volumes:
+      - name: config
+        secret:
+          secretName: wg-portal-config
+
+service:
+  annotations: {}
+  clusterIP: ""
+  labels: {}
+  loadBalancerIP: "" 
+  type: ClusterIP
+
+pvc:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""

@@ -1,0 +1,14 @@
+apiVersion: v2
+name: wg-portal
+version: 1.0.0
+description: A Wireguard server and dashboard packaged together in a single Pod
+type: application
+home: https://github.com/constellation-net/charts
+maintainers:
+  - name: Jack Gledhill
+    email: me@jackgledhill.com
+    url: https://jacksoftware.co.uk
+dependencies:
+  - name: common
+    version: 3.0.0
+    repository: https://charts.starsystem.dev
