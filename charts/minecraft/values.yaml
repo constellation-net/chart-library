@@ -1,66 +1,22 @@
-common:
-  namespace: minecraft
-
-pods:
-  affinity: {}
+pod:
   annotations: {}
-  dnsPolicy: Default
-  hostNetwork: false
+  envFrom: {}
   labels: {}
-  priorityClassName: ""
   replicas: 1
-  tolerations: []
+  serviceAccount: default
+  templateArgs: {}
 
-rbac:
-  create: false
-  serviceAccountName: '{{ include "common.name" . }}'
-  subjects: []
+service:
+  annotations: {}
+  clusterIP: ""
+  labels: {}
+  loadBalancerIP: "" 
+  type: ClusterIP
 
-minecraft:
-  service:
-    annotations: {}
-  memory:
-    initial: 1G
-    max: 2G
-  whitelist:
-    enabled: true
-    players:
-      - JackTEK
-  operators:
-    - JackTEK
-  branding:
-    serverName: Constellation
-    motd: Minecraft server running in Kubernetes
-    icon: https://google.com
-  overworld:
-    radius: 10000
-    generateStructures: true
-  nether:
-    enabled: true
-  gameplay:
-    gamemode: survival
-    enableCommandBlocks: false
-    viewDistance: 16
-    pvpEnabled: true
-    difficulty: normal
-    hardcore: false
-    spawnAnimals: true
-    spawnMonsters: true
-    spawnNpcs: true
-    spawnProtection: 0
-  server:
-    version: LATEST
-    announceAchievements: true
-    snooperEnabled: false
-    maxPlayers: 20
-    jreType: VANILLA
-    timezone: Europe/London
-    allowFlight: false
-    onlineMode: true
-    autoPause: false
-  curseforge:
-    modpackUrl: https://google.com
-  cluster:
-    dataPvc: minecraft
-    secretEnvs:
-      - secretName
+pvc:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""

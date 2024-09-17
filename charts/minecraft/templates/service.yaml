@@ -1,11 +1,6 @@
-{{ include "common.net.Service" (list . "minecraft.Service") }}
+{{ include "common.Service" (list . "minecraft.Service") }}
 
 {{- define "minecraft.Service" -}}
-{{ with .Values.minecraft.service.annotations }}
-metadata:
-  annotations:
-    {{ toYaml . | nindent 4 }}
-{{ end }}
 spec:
   ports:
     # Minecraft server

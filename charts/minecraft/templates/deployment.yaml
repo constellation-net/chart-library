@@ -1,14 +1,15 @@
-{{ include "common.pods.Deployment" (list . "minecraft.Deployment") }}
+{{ include "common.PVC" . }}
+---
+{{ include "common.Deployment" (list . "minecraft.Deployment") }}
 
 {{- define "minecraft.Deployment" -}}
 spec:
   template:
     spec:
-      dnsPolicy: Default
       containers:
         - name: minecraft
           image: itzg/minecraft-server
-          ports:
+          ports:åç
             - name: minecraft
               containerPort: 25565
           env:
@@ -18,111 +19,26 @@ spec:
               value: "30"
             - name: STOP_DURATION
               value: "30"
-            - name: INIT_MEMORY
-              value: {{ .Values.minecraft.memory.initial | quote }}
-            - name: MAX_MEMORY
-              value: {{ .Values.minecraft.memory.max | quote }}
-            - name: OPS
-              value: {{ join ", " .Values.minecraft.operators }}
-            - name: SERVER_NAME
-              value: {{ .Values.minecraft.branding.serverName | quote }}
-            - name: MOTD
-              value: {{ .Values.minecraft.branding.motd | quote }}
-            - name: ICON
-              value: {{ .Values.minecraft.branding.icon | quote }}
-            - name: MAX_WORLD_SIZE
-              value: {{ .Values.minecraft.overworld.radius | quote }}
-            - name: MODE
-              value: {{ .Values.minecraft.gameplay.gamemode | quote }}
-            - name: VIEW_DISTANCE
-              value: {{ .Values.minecraft.gameplay.viewDistance | quote }}
-            - name: DIFFICULTY
-              value: {{ .Values.minecraft.gameplay.difficulty | quote }}
-            - name: SPAWN_PROTECTION
-              value: {{ .Values.minecraft.gameplay.spawnProtection | quote }}
-            - name: VERSION
-              value: {{ .Values.minecraft.server.version | quote }}
-            - name: MAX_PLAYERS
-              value: {{ .Values.minecraft.server.maxPlayers | quote }}
             - name: TZ
-              value: {{ .Values.minecraft.server.timezone | quote }}
-            - name: TYPE
-              value: {{ .Values.minecraft.server.jreType | quote }}
-          {{ if .Values.minecraft.whitelist.enabled }}
-            - name: ENABLE_WHITELIST
-              value: "true"
-            - name: WHITELIST
-              value: {{ join ", " .Values.minecraft.whitelist.players }}
-          {{- end -}}
-          {{ if .Values.minecraft.overworld.generateStructures }}
-            - name: GENERATE_STRUCTURES
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.nether.enabled }}
-            - name: ALLOW_NETHER
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.gameplay.enableCommandBlocks }}
-            - name: ENABLE_COMMAND_BLOCK
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.gameplay.hardcore }}
-            - name: HARDCORE
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.gameplay.pvpEnabled }}
-            - name: PVP
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.gameplay.spawnAnimals }}
-            - name: SPAWN_ANIMALS
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.gameplay.spawnMonsters }}
-            - name: SPAWN_MONSTERS
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.gameplay.spawnNpcs }}
-            - name: SPAWN_NPCS
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.server.announceAchievements }}
-            - name: ANNOUNCE_PLAYER_ACHIEVEMENTS
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.server.snooperEnabled }}
+              value: Europe/London
             - name: SNOOPER_ENABLED
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.server.onlineMode }}
+              value: "false"
             - name: ONLINE_MODE
               value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.server.allowFlight }}
-            - name: ALLOW_FLIGHT
-              value: "true"
-          {{ end }}
-          {{ if .Values.minecraft.server.autoPause }}
-            - name: ENABLE_AUTOPAUSE
-              value: "true"
-          {{ end }}
-          {{ if eq .Values.minecraft.server.jreType "AUTO_CURSEFORGE" }}
-            - name: CF_PAGE_URL
-              value: {{ .Values.minecraft.curseforge.modpackUrl | quote }}
-          {{ end }}
-          envFrom:
-          {{ range $secret := .Values.minecraft.cluster.secretEnvs }}
-            - secretRef:
-                name: {{ tpl $secret . }}
-          {{ end }}
+          {{ include "common.EnvFrom" . | nindent 10 }}
+          resources:
+            requests:
+              cpu: 2
+              memory: 2G 
           volumeMounts:
             - name: data
               mountPath: /data
               readOnly: false
+              subPath: {{ .Release.Name }}
       
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ tpl .Values.minecraft.cluster.dataPvc . }}
+            claimName: {{ .Release.Name }}
             readOnly: false
 {{- end -}}
