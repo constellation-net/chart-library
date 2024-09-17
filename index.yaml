@@ -991,6 +991,25 @@ entries:
     urls:
     - minecraft-1.0.0.tgz
     version: 1.0.0
+  minio:
+  - apiVersion: v2
+    created: "2024-09-17T10:26:42.626601959Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: Cloud-native Object Storage system with builtin web UI
+    digest: f537df8b9cc53d8df7375013b5ff5d842a0abf213a061b3084beeec42f84e877
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: minio
+    type: application
+    urls:
+    - minio-1.0.0.tgz
+    version: 1.0.0
   nfs:
   - apiVersion: v2
     created: "2024-09-17T10:10:55.743202308Z"
@@ -1778,4 +1797,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:25:46.605695725Z"
+generated: "2024-09-17T10:26:42.626756318Z"
