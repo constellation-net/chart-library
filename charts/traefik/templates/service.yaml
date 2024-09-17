@@ -1,19 +1,23 @@
 # Primary proxy service, allows incoming HTTP connections to Traefik, which can then be proxied through to the rest of the cluster
-{{ include "common.net.Service" (list . "traefik.Service") }}
+{{ include "common.Service" (list . "traefik.Service") }}
 
 {{- define "traefik.Service" -}}
-{{ with .Values.traefik.service.annotations }}
-metadata:
-  annotations:
-    {{ toYaml . | nindent 4 }}
-{{ end }}
 spec:
-  type: {{ .Values.traefik.service.type }}
-  {{ with .Values.traefik.service.loadBalancerIP }}
-  loadBalancerIP: {{ . }}
-  {{ end }}
   ports:
-  {{ range $entrypoint := .Values.traefik.entrypoints }}
+    - name: web
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: websecure
+      port: 443
+      targetPort: 443
+      protocol: TCP
+    # Used by the internal ping and prometheus services to expose information
+    - name: traefik
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  {{ range $entrypoint := .Values.entrypoints }}
     - name: {{ $entrypoint.name }}
       port: {{ $entrypoint.port }} # Incoming port
       targetPort: {{ $entrypoint.port }} # Container port to proxy to 

@@ -1,8 +1,8 @@
-{{ include "common.rbac.ClusterRole" (list . "traefik.ClusterRole") }}
+{{ include "common.ClusterRole" (list . "traefik.ClusterRole") }}
 ---
-{{ include "common.rbac.ClusterRoleBinding" . }}
+{{ include "common.ClusterRoleBinding" . }}
 ---
-{{ include "common.rbac.ServiceAccount" . }}
+{{ include "common.ServiceAccount" . }}
 
 {{- define "traefik.ClusterRole" -}}
 rules:

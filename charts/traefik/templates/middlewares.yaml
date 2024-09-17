@@ -1,12 +1,12 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: cors
-  namespace: {{ include "common.namespace" . }}
+  name: {{ .Release.Name }}-cors
+  namespace: {{ .Release.Namespace }}
 spec:
   headers:
-    accessControlAllowMethods: {{ toYaml .Values.traefik.cors.allowedMethods | nindent 6 }}
-    accessControlAllowHeaders: {{ toYaml .Values.traefik.cors.allowedHeaders | nindent 6 }}
-    accessControlAllowOriginList: {{ toYaml .Values.traefik.cors.allowedOrigins | nindent 6 }}
-    accessControlMaxAge: {{ .Values.traefik.cors.maxAge }}
-    accessControlAllowCredentials: {{ .Values.traefik.cors.allowCreds }}
+    accessControlAllowMethods: {{ toYaml .Values.corsMiddleware.allowedMethods | nindent 6 }}
+    accessControlAllowHeaders: {{ toYaml .Values.corsMiddleware.allowedHeaders | nindent 6 }}
+    accessControlAllowOriginList: {{ toYaml .Values.corsMiddleware.allowedOrigins | nindent 6 }}
+    accessControlMaxAge: {{ .Values.corsMiddleware.maxAge }}
+    accessControlAllowCredentials: {{ .Values.corsMiddleware.allowCreds }}

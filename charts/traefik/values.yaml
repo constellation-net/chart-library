@@ -1,78 +1,46 @@
-common:
-  namespace: traefik
-
-pods:
-  affinity: {}
+pod:
   annotations: {}
-  dnsPolicy: ""
-  hostNetwork: false
+  args: []
+  envFrom: {}
   labels: {}
-  priorityClassName: ""
   replicas: 1
-  tolerations: []
+  serviceAccount: default
+  templateArgs: {}
 
-rbac:
-  create: true
-  serviceAccountName: '{{ include "common.name" . }}'
-  subjects: []
+service:
+  annotations: {}
+  clusterIP: ""
+  labels: {}
+  loadBalancerIP: "" 
+  type: ClusterIP
 
-traefik:
-  # Ports that traffic will listen to and provide proxying for
-  # Can be extended using entrypoints+: in your values.yaml file
-  entrypoints:
-    - name: web # Name of the entrypoint
-      port: 80
-      protocol: TCP
-    - name: websecure
-      port: 443
-      protocol: TCP
+pvc:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""
 
-  service:
-    type: ClusterIP
-    annotations: {}
-    loadBalancerIP: ""
+# Ports that traffic will listen to and provide proxying for
+entrypoints:
+  - name: web # Name of the entrypoint
+    port: 80
+    protocol: TCP
+  - name: websecure
+    port: 443
+    protocol: TCP
 
-  loadBalancing:
-    enabled: false
-    ip: ""
-
-  acmeSecret: traefik-acme
-
-  cors:
-    allowedMethods:
-      - GET
-      - PUT
-      - POST
-      - HEAD
-      - OPTIONS
-    allowedOrigins:
-      - https://example.com
-    allowCreds: true
-    allowedHeaders:
-      - "*"
-    maxAge: 100
-
-  # CLI arguments passed to the Traefik container, this is essentially how you pass a static configuration
-  # Can be extended using cliArgs+: in your values.yaml file
-  cliArgs:
-    - --log.level=DEBUG
-    - --api.dashboard=true # Enables the Traefik dashboard
-    - --api.insecure=false # Enforces security on the dashboard and requires it to be proxied
-    - --metrics.addinternals=true # Allows more metrics to be seen by Prometheus
-    - --ping # Enables the ping endpoint for healthchecking Traefik
-    - --providers.kubernetescrd # Automatically fetches all the IngressRoute resources in the cluster and proxies them
-    - --global.sendanonymoususage=false
-    - --entrypoints.web.address=:80
-    - --entrypoints.web.forwardedheaders.insecure=false
-    - --entrypoints.web.forwardedheaders.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
-    - --entrypoints.web.proxyprotocol.insecure=false
-    - --entrypoints.web.proxyprotocol.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
-    - --entrypoints.web.http.redirections.entrypoint.to=websecure # Redirects HTTP requests to HTTPS 
-    - --entrypoints.websecure.address=:443
-    - --entrypoints.websecure.http.tls
-    - --entrypoints.websecure.forwardedheaders.insecure=false
-    - --entrypoints.websecure.forwardedheaders.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
-    - --entrypoints.websecure.proxyprotocol.insecure=false
-    - --entrypoints.websecure.proxyprotocol.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
-    - --entrypoints.websecure.http.middlewares=cors # Automatically responds to CORS requests for proxied services
-    - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
+corsMiddleware:
+  allowedMethods:
+    - GET
+    - PUT
+    - POST
+    - HEAD
+    - OPTIONS
+  allowedOrigins:
+    - https://example.com
+  allowCreds: true
+  allowedHeaders:
+    - "*"
+  maxAge: 100

@@ -1,43 +1,78 @@
-# This is the star of the show. This manifest deploys a Traefik container with a volume mount to the ConfigMap that contains Traefik's static configuration
-{{ include "common.pods.Deployment" (list . "traefik.Deployment") }}
+{{ include "common.PVC" . }}
+---
+{{ include "common.Deployment" (list . "traefik.Deployment") }}
 
 {{- define "traefik.Deployment" -}}
 spec:
   template:
     spec:
-      # Every time the Pod starts, this container runs to update the file permissions in the temporary volume
-      # Credit to the folks here for documenting their solutions: https://github.com/traefik/traefik-helm-chart/issues/164
-      initContainers:
-        - name: acme-file-perms
-          image: busybox:1.31.1
-          command: ["sh", "-c", "touch /data/acme.json && chmod -Rv 600 /data/acme.json"]
-          volumeMounts:
-            - name: certs
-              mountPath: /data
       # Creates a single Traefik container with a ConfigMap mounted to provide the static configuration
       containers:
         - name: traefik
           image: traefik:v3.1
           args:
-          {{ range $arg := .Values.traefik.cliArgs }}
-            - {{ $arg }}
+            - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
+            - --providers.kubernetescrd # Automatically fetches all the IngressRoute resources in the cluster and proxies them
+            - --ping # Enables the ping endpoint for healthchecking Traefik
+            - --global.sendanonymoususage=false
+            - --api.dashboard=true # Enables the Traefik dashboard
+            - --api.insecure=false # Enforces security on the dashboard and requires it to be proxied
+            - --log.level=DEBUG
+            - --metrics.addinternals=true # Allows more metrics to be seen by Prometheus
+            - --entrypoints.web.address=:80
+            - --entrypoints.web.forwardedheaders.insecure=false
+            - --entrypoints.web.forwardedheaders.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
+            - --entrypoints.web.proxyprotocol.insecure=false
+            - --entrypoints.web.proxyprotocol.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
+            - --entrypoints.web.http.redirections.entrypoint.to=websecure # Redirects HTTP requests to HTTPS
+            - --entrypoints.web.http.redirections.entrypoint.scheme=https
+            - --entrypoints.websecure.address=:443
+            - --entrypoints.websecure.http.tls.certresolver=letsencrypt
+            - --entrypoints.websecure.http.tls.domains[0].main=starsystem.dev
+            - --entrypoints.websecure.http.tls.domains[0].sans=*.starsystem.dev,*.cluster.starsystem.dev
+            - --entrypoints.websecure.forwardedheaders.insecure=false
+            - --entrypoints.websecure.forwardedheaders.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
+            - --entrypoints.websecure.proxyprotocol.insecure=false
+            - --entrypoints.websecure.proxyprotocol.trustedips=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7
+            - --entrypoints.websecure.http.middlewares={{ .Release.Namespace }}-{{ .Release.Name }}-cors # Automatically responds to CORS requests for proxied services
+          {{ with .Values.pod.args }}
+            {{ toYaml . | nindent 12 }}
           {{ end }}
+          {{ include "common.EnvFrom" . | nindent 10 }}
           ports:
-          {{ range $entrypoint := .Values.traefik.entrypoints }}
+            - name: web
+              port: 80
+              protocol: TCP
+            - name: websecure
+              port: 443
+              protocol: TCP
+            - name: traefik
+              port: 8080
+              protocol: TCP
+          {{ range $entrypoint := .Values.entrypoints }}
             - name: {{ $entrypoint.name }}
               containerPort: {{ $entrypoint.port }}
               protocol: {{ $entrypoint.protocol }}
           {{ end }}
-          envFrom:
-            - secretRef:
-                name: {{ tpl .Values.traefik.acmeSecret . }}
+          resources:
+            requests:
+              cpu: 500m
+              memory: 100M 
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
           volumeMounts:
             - name: certs
               mountPath: /data
-      
+
       volumes:
         - name: certs
-          emptyDir:
-            sizeLimit: 50Mi
-            medium: Memory
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
+            readOnly: false
 {{- end -}}
