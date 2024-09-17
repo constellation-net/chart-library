@@ -1155,6 +1155,25 @@ entries:
     urls:
     - path-provisioner-1.0.0.tgz
     version: 1.0.0
+  pihole:
+  - apiVersion: v2
+    created: "2024-09-17T10:17:46.051419973Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: DNS sinkhole for network-wide ad-blocking and custom DNS routing
+    digest: 93d80ad513734d564cb32ad2993ffe650a002c3176202bc5b218bcfefd262f1d
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: pihole
+    type: application
+    urls:
+    - pihole-1.0.0.tgz
+    version: 1.0.0
   traefik:
   - apiVersion: v2
     created: "2024-09-17T10:15:15.399897403Z"
@@ -1608,4 +1627,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:15:15.400150646Z"
+generated: "2024-09-17T10:17:46.051636397Z"
