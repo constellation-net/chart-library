@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+stringData:
+  config.json: | {{ .Values.nodePaths | toPrettyJson | nindent 4 }}
+  helperPod.yaml: | {{ include "pathProvisioner.helperPod" . | nindent 4 }}
+  setup: |
+    #!/bin/sh
+    set -eu
+    mkdir -m 0777 -p "${VOL_DIR}"
+    chmod 700 "${VOL_DIR}/.."
+  teardown: |
+    #!/bin/sh
+    set -eu
+    rm -rf "${VOL_DIR}"

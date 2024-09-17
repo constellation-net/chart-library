@@ -1,0 +1,40 @@
+{{ include "common.Deployment" (list . "pathProvisioner.Deployment") }}
+
+{{- define "pathProvisioner.Deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: path-provisioner
+          image: rancher/local-path-provisioner
+          args:
+            - --debug
+            - start
+            - --config
+            - /etc/config/config.json
+            - --service-account-name
+            - {{ tpl (.Values.pod.serviceAccount | default .Release.Name) . }}
+            - --provisioner-name
+            - storage.cluster.starsystem.dev/{{ .Release.Name }}
+            - --helper-image
+            - busybox:latest
+            - --configmap-name
+            - {{ .Release.Name }}
+          env:
+            - name: CONFIG_MOUNT_PATH
+              value: /etc/config
+            - name: POD_NAMESPACE
+              value: {{ .Release.Namespace }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 50M 
+          volumeMounts:
+            - name: config
+              mountPath: /etc/config
+
+      volumes:
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}
+{{- end -}}

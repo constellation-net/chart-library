@@ -1,0 +1,69 @@
+# Modified version of: https://github.com/rancher/local-path-provisioner/tree/master/deploy/chart/local-path-provisioner/templates
+{{ include "common.ClusterRole" (list . "pathProvisioner.ClusterRole") }}
+---
+{{ include "common.ClusterRoleBinding" . }}
+---
+{{ include "common.Role" (list . "pathProvisioner.Role") }}
+---
+{{ include "common.RoleBinding" . }}
+---
+{{ include "common.ServiceAccount" . }}
+
+{{- define "pathProvisioner.ClusterRole" -}}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - persistentvolumeclaims
+      - configmaps
+      - pods
+      - pods/log
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - persistentvolumes
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - patch
+      - update
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - storage.k8s.io
+    resources:
+      - storageclasses
+    verbs:
+      - get
+      - list
+      - watch
+{{- end -}}
+
+{{- define "pathProvisioner.Role" -}}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - patch
+      - update
+      - delete
+{{- end -}}
