@@ -1174,6 +1174,26 @@ entries:
     urls:
     - pihole-1.0.0.tgz
     version: 1.0.0
+  postgresql:
+  - apiVersion: v2
+    created: "2024-09-17T10:19:17.750380334Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: Provisions a single PostgreSQL server, along with a Prometheus exporter
+      for monitoring
+    digest: 8104db1a099e0de222acebc15f8132d0760c45077264a5f9437a374ef344e783
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: postgresql
+    type: application
+    urls:
+    - postgresql-1.0.0.tgz
+    version: 1.0.0
   traefik:
   - apiVersion: v2
     created: "2024-09-17T10:15:15.399897403Z"
@@ -1627,4 +1647,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:17:46.051636397Z"
+generated: "2024-09-17T10:19:17.750604443Z"
