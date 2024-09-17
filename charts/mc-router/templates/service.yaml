@@ -1,4 +1,4 @@
-{{ include "common.net.Service" (list . "mcrouter.Service") }}
+{{ include "common.Service" (list . "mcrouter.Service") }}
 
 {{- define "mcrouter.Service" -}}
 spec:

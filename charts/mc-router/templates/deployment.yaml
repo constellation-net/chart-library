@@ -1,17 +1,22 @@
-{{ include "common.pods.Deployment" (list . "mcrouter.Deployment") }}
+{{ include "common.Deployment" (list . "mcrouter.Deployment") }}
 
 {{- define "mcrouter.Deployment" -}}
 spec:
   template:
     spec:
       containers:
-        - name: mc-router
-          image: itzg/mc-router
-        {{ with .Values.router.cliArgs }}
+        - name: router
+          image: itzg/mc-router:latest
           args:
+            - --in-kube-cluster # Enables kubernetes service discovery
+          {{ with .Values.pod.args }}
             {{ toYaml . | nindent 12 }}
-        {{ end }}
+          {{ end }}
           ports:
             - name: minecraft
               containerPort: 25565
+          resources:
+            requests:
+              cpu: 100m
+              memory: 50M 
 {{- end -}}
