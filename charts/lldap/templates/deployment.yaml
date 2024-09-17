@@ -1,0 +1,31 @@
+{{ include "common.Deployment" (list . "lldap.Deployment") }}
+
+{{- define "lldap.Deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+        - name: lldap
+          image: lldap/lldap:stable
+          ports:
+            - name: ldap
+              containerPort: 389
+            - name: dashboard
+              containerPort: 80
+          env:
+            - name: TZ
+              value: Europe/London
+            - name: LLDAP_LDAP_PORT
+              value: "389"
+            - name: LLDAP_HTTP_PORT
+              value: "80"
+            - name: LLDAP_LDAPS_OPTIONS__ENABLED
+              value: "false"
+            - name: LLDAP_VERBOSE
+              value: "true"
+          {{ include "common.EnvFrom" . | nindent 10 }}
+          resources:
+            requests:
+              cpu: 500m
+              memory: 200M
+{{- end -}}

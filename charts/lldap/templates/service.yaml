@@ -1,0 +1,12 @@
+{{ include "common.Service" (list . "lldap.Service") }}
+
+{{- define "lldap.Service" -}}
+spec:
+  ports:
+    # LDAP
+    - port: 389
+      targetPort: 389
+    # Dashboard
+    - port: 80
+      targetPort: 80
+{{- end -}}

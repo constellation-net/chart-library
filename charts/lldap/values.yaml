@@ -1,0 +1,14 @@
+pod:
+  annotations: {}
+  envFrom: {}
+  labels: {}
+  replicas: 1
+  serviceAccount: default
+  templateArgs: {}
+
+service:
+  annotations: {}
+  clusterIP: ""
+  labels: {}
+  loadBalancerIP: "" 
+  type: ClusterIP
