@@ -1,0 +1,19 @@
+{{- define "common.statefulsetoverrides" -}}
+kind: StatefulSet
+spec:
+  # When the StatefulSet is deleted or scaled down, PVCs are deleted rather than retained
+  # This leaves retention decision down to the PV in which the PVC was attached
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+    whenScaled: Delete
+  serviceName: {{ .Release.Name }}-headless
+  replicas: {{ .Values.pod.replicas | default 1 }}
+{{- end -}}
+
+{{- define "common.statefulset" -}}
+{{ include "common.DaemonSet" (list . "common.statefulsetoverrides") }}
+{{- end -}}
+
+{{- define "common.StatefulSet" -}}
+{{ include "common.util.merge" (append . "common.statefulset") }}
+{{- end -}}

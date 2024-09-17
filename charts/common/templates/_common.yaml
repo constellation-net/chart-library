@@ -1,7 +1,18 @@
-{{- define "common.name" -}}
-{{ .Release.Name }}-{{ .Chart.Name }}
+{{- define "common.Labels" -}}
+app: {{ .Chart.Name }}
+release: {{ .Release.Name }}
 {{- end -}}
 
-{{- define "common.namespace" -}}
-{{ tpl .Values.common.namespace . }}
+{{- define "common.PodLabels" -}}
+{{ include "common.Labels" . }}
+{{ with .Values.pod.labels }}
+{{ toYaml . }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.EnvFrom" -}}
+{{ with .Values.pod.envFrom }}
+envFrom:
+  {{ toYaml . | nindent 2 }}
+{{ end }}
 {{- end -}}

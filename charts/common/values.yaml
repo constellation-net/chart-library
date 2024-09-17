@@ -1,17 +1,23 @@
-common:
-  namespace: default
-
-pods:
-  affinity: {}
+pod:
   annotations: {}
-  dnsPolicy: ""
-  hostNetwork: false
+  envFrom: {}
   labels: {}
-  priorityClassName: ""
   replicas: 1
-  tolerations: []
+  serviceAccount: default
+  templateArgs:
+    volumes: []
 
-rbac:
-  create: false
-  serviceAccountName: '{{ include "common.name" . }}'
-  subjects: []
+service:
+  annotations: {}
+  clusterIP: ""
+  labels: {}
+  loadBalancerIP: "" 
+  type: ClusterIP
+
+pvc:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""

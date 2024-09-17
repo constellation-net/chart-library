@@ -1,12 +1,33 @@
-{{- define "common.pods._daemonset" -}}
+{{- define "common._daemonset" -}}
 apiVersion: apps/v1
 kind: DaemonSet
-{{ include "common.pods.metadata" . }}
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+{{ with .Values.pod.annotations }}
+  annotations:
+    {{ toYaml . | nindent 2 }}
+{{ end }}
 spec:
-  {{ include "common.pods.PodSetSelector" . | nindent 2 }}
-  {{ include "common.pods.PodTemplate" . | nindent 2 }}
+  selector:
+    matchLabels:
+      {{ include "common.PodLabels" . | nindent 8 }}
+  template:
+    metadata:
+      labels:
+        {{ include "common.PodLabels" . | nindent 8 }}
+    spec:
+    {{ with .Values.pod.templateArgs }}
+      {{ toYaml . | nindent 6 }}
+    {{ end }}
+      hostname: {{ .Release.Name }}
+      terminationGracePeriodSeconds: 30
+      restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+      serviceAccountName: {{ tpl (.Values.pod.serviceAccount | default .Release.Name) . }}
 {{- end -}}
 
-{{- define "common.pods.DaemonSet" -}}
-{{ include "common.util.merge" (append . "common.pods._daemonset") }}
+{{- define "common.DaemonSet" -}}
+{{ include "common.util.merge" (append . "common._daemonset") }}
 {{- end -}}

@@ -1,0 +1,11 @@
+{{- define "common.PVC" -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes: {{ toYaml .Values.pvc.accessModes | nindent 4 }}
+  resources: {{ toYaml .Values.pvc.resources | nindent 4 }}
+  storageClassName: {{ .Values.pvc.storageClassName | default "" }}
+{{- end -}}
