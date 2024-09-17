@@ -1117,6 +1117,26 @@ entries:
     urls:
     - nfs-1.0.0.tgz
     version: 1.0.0
+  path-provisioner:
+  - apiVersion: v2
+    created: "2024-09-17T10:08:46.728774425Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: Dynamically provisions local volumes on nodes for consumption by
+      Pods
+    digest: cc1bb8450ce7aa710174efcb211765361144421f65d121d8fda88e2a14a17f93
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: path-provisioner
+    type: application
+    urls:
+    - path-provisioner-1.0.0.tgz
+    version: 1.0.0
   traefik:
   - apiVersion: v2
     created: "2024-08-15T22:44:10.45326726Z"
@@ -1552,4 +1572,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:07:24.098283512Z"
+generated: "2024-09-17T10:08:46.728983419Z"
