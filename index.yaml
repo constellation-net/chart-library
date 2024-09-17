@@ -1557,6 +1557,25 @@ entries:
     urls:
     - wg-easy-1.0.0.tgz
     version: 1.0.0
+  wg-portal:
+  - apiVersion: v2
+    created: "2024-09-17T10:21:35.261690187Z"
+    dependencies:
+    - name: common
+      repository: https://charts.starsystem.dev
+      version: 3.0.0
+    description: A Wireguard server and dashboard packaged together in a single Pod
+    digest: 777c25a07579a8db854ed4209e7a44011e1c7a8a59e8e7ab3a6607fe5b559ebb
+    home: https://github.com/constellation-net/charts
+    maintainers:
+    - email: me@jackgledhill.com
+      name: Jack Gledhill
+      url: https://jacksoftware.co.uk
+    name: wg-portal
+    type: application
+    urls:
+    - wg-portal-1.0.0.tgz
+    version: 1.0.0
   wireguard:
   - apiVersion: v2
     created: "2024-08-16T23:15:49.354854845Z"
@@ -1684,4 +1703,4 @@ entries:
     urls:
     - wireguard-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-17T10:21:00.171650623Z"
+generated: "2024-09-17T10:21:35.261881635Z"
